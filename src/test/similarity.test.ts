@@ -84,6 +84,34 @@ describe("find similar", () => {
     expect(results[0]?.kind).toBe("similar-product");
   });
 
+  it("ranks a different category below the same category", () => {
+    if (!hero) throw new Error("Missing hero");
+    const other: Post = {
+      ...hero,
+      id: "p-other",
+      category: "fashion",
+      likes: 99999,
+      attributes: [...hero.attributes],
+    };
+    const weaker: Post = {
+      ...hero,
+      id: "p-weaker",
+      likes: 1,
+      productTag: undefined,
+      attributes: ["tall-shaft"],
+    };
+    const results = findSimilar({
+      source: hero,
+      posts: [other, weaker],
+      selected: ["tall-shaft", "distressed-leather"],
+    });
+    expect(results.map((result) => result.postId)).toEqual([
+      "p-weaker",
+      "p-other",
+    ]);
+    expect(results[1]?.score).toBeGreaterThan(results[0]?.score ?? 0);
+  });
+
   it("drops a score of 0 and stops at 12", () => {
     if (!hero) throw new Error("Missing hero");
     const extras: Post[] = Array.from({ length: 15 }, (_, index) => ({

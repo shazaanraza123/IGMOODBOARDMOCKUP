@@ -244,6 +244,7 @@ export function Ideas() {
         open={picking}
         title="References"
         titleId="references-title"
+        detail={`${includedIds.length} of ${pool.length} selected`}
         onClose={() => setPicking(false)}
         returnFocusRef={pickerFocus}
       >
@@ -267,12 +268,27 @@ export function Ideas() {
                       height={48}
                     />
                   </span>
-                  <span>{entry.post.author}</span>
+                  <span className={styles.pickName}>{entry.post.author}</span>
+                  <span
+                    className={on ? styles.markOn : styles.mark}
+                    aria-hidden="true"
+                  >
+                    {on ? <Icon name="check" size={14} /> : null}
+                  </span>
                 </button>
               </li>
             );
           })}
         </ul>
+        <div className={styles.pickerFoot}>
+          <button
+            type="button"
+            className={styles.done}
+            onClick={() => setPicking(false)}
+          >
+            Done
+          </button>
+        </div>
       </Sheet>
     </section>
   );

@@ -3,17 +3,23 @@
   right: 4px;
   bottom: 4px;
   left: 4px;
-  display: -webkit-box;
   margin: 0;
-  padding: 6px 8px;
+  padding: 6px 8px 12px;
   overflow: hidden;
   border-radius: var(--radius-sm);
   background: rgb(0 0 0 / 72%);
   color: #ffffff;
+}
+
+.clamp {
+  display: -webkit-box;
+  max-height: 32px;
+  overflow: hidden;
   font-size: 12px;
-  line-height: 1.35;
+  line-height: 16px;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .note strong {

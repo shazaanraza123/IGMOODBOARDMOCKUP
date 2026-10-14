@@ -18,6 +18,15 @@
   font-weight: 600;
 }
 
+.tab:focus {
+  outline: none;
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--blue-text);
+  outline-offset: 2px;
+}
+
 .tab[aria-selected="true"] {
   color: var(--text);
   box-shadow: inset 0 -1px 0 var(--text);
@@ -125,14 +134,26 @@
   text-decoration: none;
 }
 
-.note,
-.briefRow {
+.note {
   margin: 20px 16px 0;
 }
 
-.brief {
-  color: var(--blue-text);
+.briefLink {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--tap);
+  margin: 8px 16px 0;
+  padding: 8px 0;
+  color: var(--text);
   font-size: 14px;
   font-weight: 600;
+  line-height: 1.3;
   text-decoration: none;
+}
+
+.briefLink svg {
+  flex: none;
+  color: var(--text-2);
 }

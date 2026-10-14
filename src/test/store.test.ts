@@ -29,18 +29,26 @@ beforeEach(async () => {
 });
 
 describe("seed catalog", () => {
-  it("has about 40 posts in the planned mix", () => {
-    expect(posts).toHaveLength(40);
+  it("has the seeded post mix, including stage posts kept off the boards", () => {
+    expect(posts).toHaveLength(48);
     expect(posts.filter((item) => item.category === "footwear")).toHaveLength(
       22,
     );
-    expect(posts.filter((item) => item.category === "stage")).toHaveLength(12);
+    expect(posts.filter((item) => item.category === "stage")).toHaveLength(20);
     expect(
       posts.filter(
         (item) => item.category === "fashion" || item.category === "packaging",
       ),
     ).toHaveLength(6);
-    expect(new Set(posts.map((item) => item.id)).size).toBe(40);
+    expect(new Set(posts.map((item) => item.id)).size).toBe(48);
+    const onBoards = new Set(
+      seedBoards.flatMap((board) => board.items.map((item) => item.postId)),
+    );
+    for (let index = 13; index <= 20; index += 1) {
+      const id = `p-stage-${String(index).padStart(2, "0")}`;
+      expect(getPost(id)?.category).toBe("stage");
+      expect(onBoards.has(id)).toBe(false);
+    }
   });
 
   it("gives every post 3 to 6 attributes and a photo path", () => {

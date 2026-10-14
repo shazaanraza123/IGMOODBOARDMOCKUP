@@ -43,6 +43,14 @@ Shot notes are the `imageAlt` text. No real people, no real brands, and no Insta
 - `p-stage-10.jpg` — A stage during setup with floor tape and type samples nearby
 - `p-stage-11.jpg` — A monochrome crowd photo with readable type on a distant screen
 - `p-stage-12.jpg` — An empty stage with type proofs piled under a work light
+- `p-stage-13.jpg` — A minimal stage under one hard side light
+- `p-stage-14.jpg` — A crowd shot toward a stage lit by one narrow spot
+- `p-stage-15.jpg` — A behind-the-scenes stage with a ladder and a type sketch
+- `p-stage-16.jpg` — An archival monochrome photo of a crowd facing a dark stage
+- `p-stage-17.jpg` — A behind-the-scenes view of work light beside a lit stage
+- `p-stage-18.jpg` — A minimal stage whose only scenery is large lettering
+- `p-stage-19.jpg` — A crowd and a backstage wing sharing one stage light
+- `p-stage-20.jpg` — An archival photo of stage typography proofs in monochrome
 
 ## Fashion
 

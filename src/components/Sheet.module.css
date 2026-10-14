@@ -53,3 +53,18 @@
   line-height: 1.2;
   text-align: center;
 }
+
+.title:focus,
+.title:focus-visible {
+  outline: none;
+}
+
+.detail {
+  flex: none;
+  margin: -6px 16px 12px;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+}

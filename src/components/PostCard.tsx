@@ -127,7 +127,7 @@ export function PostCard({ post, onOpenSave }: PostCardProps) {
           </span>
         </button>
       </div>
-      <p className={styles.likes}>{post.likes} likes</p>
+      <p className={styles.likes}>{post.likes.toLocaleString("en-US")} likes</p>
       <p className={styles.caption}>
         <strong>{post.author}</strong> {post.caption}
       </p>

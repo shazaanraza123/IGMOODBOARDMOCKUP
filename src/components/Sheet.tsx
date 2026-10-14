@@ -11,6 +11,7 @@ type SheetProps = {
   open: boolean;
   title: string;
   titleId: string;
+  detail?: string;
   onClose: () => void;
   returnFocusRef?: RefObject<HTMLElement | null>;
   children: ReactNode;
@@ -20,6 +21,7 @@ export function Sheet({
   open,
   title,
   titleId,
+  detail,
   onClose,
   returnFocusRef,
   children,
@@ -142,6 +144,7 @@ export function Sheet({
             <h2 id={titleId} className={styles.title}>
               {title}
             </h2>
+            {detail ? <p className={styles.detail}>{detail}</p> : null}
             {children}
           </motion.div>
         </div>

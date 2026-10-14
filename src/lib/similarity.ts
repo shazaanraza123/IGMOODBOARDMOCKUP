@@ -69,20 +69,25 @@ export function findSimilar(query: SimilarityQuery): SimilarResult[] {
     .map((candidate) => {
       const matchedAttributes = intersects(selected, candidate.attributes);
       const related = intersects(rest, candidate.attributes);
+      const sameCategory = candidate.category === source.category;
       const score =
-        2 * matchedAttributes.length +
-        related.length +
-        (candidate.category === source.category ? 1 : 0);
+        2 * matchedAttributes.length + related.length + (sameCategory ? 1 : 0);
       return {
         postId: candidate.id,
         score,
         kind: kindFor(candidate, source, selected),
         matchedAttributes,
         likes: candidate.likes,
+        sameCategory,
       };
     })
     .filter((result) => result.score > 0)
-    .sort((a, b) => b.score - a.score || b.likes - a.likes)
+    .sort(
+      (a, b) =>
+        Number(b.sameCategory) - Number(a.sameCategory) ||
+        b.score - a.score ||
+        b.likes - a.likes,
+    )
     .slice(0, 12);
 
   return ranked.map(({ postId, score, kind, matchedAttributes }) => ({

@@ -23,6 +23,15 @@
   text-decoration: none;
 }
 
+.tab:focus {
+  outline: none;
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--blue-text);
+  outline-offset: 2px;
+}
+
 .tab[aria-current="page"] {
   color: var(--text);
 }

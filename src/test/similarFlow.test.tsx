@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it } from "vitest";
 import { App } from "../App";
+import { posts } from "../data/posts";
 import { routerFuture } from "../routerFuture";
 import { useMoodboardStore } from "../store/useMoodboardStore";
 
@@ -92,5 +93,39 @@ describe("find similar screen", () => {
     expect(
       screen.queryByRole("button", { name: /Rowan Bootmakers/ }),
     ).not.toBeInTheDocument();
+  });
+
+  it("leads stage results with stage posts that are not already on the board", () => {
+    renderAt("/board/b-stage/similar");
+    const cards = screen.getAllByRole("listitem");
+    expect(cards[0]).toHaveTextContent("rig.notes");
+    expect(
+      cards
+        .slice(0, 8)
+        .map((card) => card.textContent)
+        .join(" "),
+    ).not.toMatch(/cloth\.notes|form\.archive|paper\.goods|packing\.room/);
+    expect(
+      screen.queryByText("Few close matches yet. Showing related posts."),
+    ).not.toBeInTheDocument();
+  });
+
+  it("says there are few close matches when under three share the category", () => {
+    const off = new Set(["p-stage-13", "p-stage-14"]);
+    const items = posts
+      .filter((post) => post.category === "stage" && !off.has(post.id))
+      .map((post, index) => ({ postId: post.id, addedAt: index }));
+    useMoodboardStore.setState({
+      boards: useMoodboardStore
+        .getState()
+        .boards.map((board) =>
+          board.id === "b-stage" ? { ...board, items } : board,
+        ),
+    });
+    renderAt("/board/b-stage/similar?post=p-stage-01");
+    expect(
+      screen.getByText("Few close matches yet. Showing related posts."),
+    ).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem").length).toBeGreaterThan(2);
   });
 });

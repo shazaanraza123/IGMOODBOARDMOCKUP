@@ -7,7 +7,9 @@ type NoteOverlayProps = {
 export function NoteOverlay({ text }: NoteOverlayProps) {
   return (
     <p className={styles.note}>
-      <strong>Note</strong> · {text}
+      <span className={styles.clamp}>
+        <strong>Note</strong> · {text}
+      </span>
     </p>
   );
 }

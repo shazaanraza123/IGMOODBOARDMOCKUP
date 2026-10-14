@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Chip } from "../components/Chip";
 import { EmptyState } from "../components/EmptyState";
@@ -38,6 +38,7 @@ export function Board() {
   const [menuOpen, setMenuOpen] = useState(false);
   const detailFocus = useRef<HTMLElement | null>(null);
   const moreRef = useRef<HTMLButtonElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const title = board?.name ?? boardTitle(boardId);
   const subtitle = board
     ? `${board.items.length} saved · ${board.isPrivate ? "Private" : "Public"}`
@@ -69,6 +70,28 @@ export function Board() {
     if (filter === "shortlist") return Boolean(item.shortlisted);
     return true;
   });
+
+  useEffect(() => {
+    const node = stickyRef.current;
+    if (!node) return;
+    const root = document.documentElement;
+    const apply = () => {
+      root.style.setProperty(
+        "--toast-lift",
+        `${node.getBoundingClientRect().height + 12}px`,
+      );
+    };
+    apply();
+    if (typeof ResizeObserver === "undefined") {
+      return () => root.style.removeProperty("--toast-lift");
+    }
+    const observer = new ResizeObserver(apply);
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty("--toast-lift");
+    };
+  }, [board?.id, board?.kind]);
 
   const noteCount = board?.items.filter((item) => item.note).length ?? 0;
   const shortCount =
@@ -182,7 +205,7 @@ export function Board() {
             </div>
           )}
           {board.kind === "creator" ? (
-            <div className={styles.sticky}>
+            <div ref={stickyRef} className={styles.sticky} data-sticky-cta="">
               <Link className={styles.develop} to={ideasTo}>
                 <Icon name="sparkle" size={18} />
                 Develop an idea

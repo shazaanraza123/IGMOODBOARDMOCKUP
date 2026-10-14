@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -114,5 +114,30 @@ describe("creator flow", () => {
       screen.getByText("Save a direction and it shows up here."),
     ).toBeInTheDocument();
     expect(useMoodboardStore.getState().briefs).toEqual([]);
+  });
+
+  it("marks selected references and closes from Done", async () => {
+    const user = userEvent.setup();
+    renderAt("/board/b-stage/ideas");
+    await user.click(
+      screen.getByRole("button", { name: "Based on 5 references" }),
+    );
+    const dialog = screen.getByRole("dialog", { name: "References" });
+    expect(within(dialog).getByText("5 of 12 selected")).toBeInTheDocument();
+    const unselected = within(dialog).getAllByRole("button", {
+      pressed: false,
+    });
+    expect(unselected.length).toBeGreaterThan(0);
+    await user.click(unselected[0]!);
+    expect(within(dialog).getByText("6 of 12 selected")).toBeInTheDocument();
+    await user.click(within(dialog).getByRole("button", { name: "Done" }));
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("dialog", { name: "References" }),
+      ).not.toBeInTheDocument();
+    });
+    expect(
+      screen.getByRole("button", { name: "Based on 6 references" }),
+    ).toBeInTheDocument();
   });
 });

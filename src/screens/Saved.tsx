@@ -37,6 +37,7 @@ const COLLECTION_IDS = [
 export function Saved() {
   const boards = useMoodboardStore((state) => state.boards);
   const savedIds = useMoodboardStore((state) => state.savedIds);
+  const briefs = useMoodboardStore((state) => state.briefs);
   const [tab, setTab] = useState<SavedTab>("moodboards");
   const [query, setQuery] = useState("");
   const [menuId, setMenuId] = useState<string | null>(null);
@@ -108,6 +109,7 @@ export function Saved() {
             aria-selected={tab === id}
             aria-controls={`saved-panel-${id}`}
             tabIndex={tab === id ? 0 : -1}
+            onMouseDown={(event) => event.preventDefault()}
             onClick={() => setTab(id)}
           >
             {TAB_LABEL[id]}
@@ -308,11 +310,10 @@ export function Saved() {
               ))}
             </div>
           )}
-          <p className={styles.briefRow}>
-            <Link to="/brief" className={styles.brief}>
-              Brief
-            </Link>
-          </p>
+          <Link to="/brief" className={styles.briefLink}>
+            <span>Brief · {briefs.length} saved</span>
+            <Icon name="chevronRight" size={18} />
+          </Link>
         </div>
       ) : null}
 

@@ -86,6 +86,11 @@ export function FindSimilar() {
     if (tab === "inspiration") return result.kind === "inspiration";
     return true;
   });
+  const sameCategory = results.filter(
+    (result) => getPost(result.postId)?.category === source?.category,
+  ).length;
+  const fewMatches =
+    selected.length > 0 && results.length > 0 && sameCategory < 3;
 
   const onTabKey = (event: KeyboardEvent<HTMLDivElement>) => {
     const index = TABS.findIndex((item) => item.id === tab);
@@ -172,12 +177,18 @@ export function FindSimilar() {
                 aria-selected={tab === item.id}
                 aria-controls="similar-panel"
                 tabIndex={tab === item.id ? 0 : -1}
+                onMouseDown={(event) => event.preventDefault()}
                 onClick={() => setTab(item.id)}
               >
                 {item.label}
               </button>
             ))}
           </div>
+          {fewMatches ? (
+            <p className={styles.few}>
+              Few close matches yet. Showing related posts.
+            </p>
+          ) : null}
           <div
             id="similar-panel"
             role="tabpanel"

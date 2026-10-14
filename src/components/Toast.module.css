@@ -1,7 +1,7 @@
 .toast {
   position: absolute;
   right: 12px;
-  bottom: calc(var(--tab-bar-height) + 8px);
+  bottom: calc(var(--tab-bar-height) + var(--toast-lift, 8px));
   left: 12px;
   z-index: 4;
   display: flex;

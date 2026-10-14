@@ -15,8 +15,8 @@
 }
 
 .blue {
-  background: transparent;
-  color: var(--blue-text);
+  background: var(--blue);
+  color: #ffffff;
 }
 
 .pressed {

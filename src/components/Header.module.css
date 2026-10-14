@@ -25,6 +25,13 @@
   line-height: 1.2;
 }
 
+.title:focus,
+.title:focus-visible,
+.wordmark:focus,
+.wordmark:focus-visible {
+  outline: none;
+}
+
 .subtitle {
   margin: 1px 0 0;
   color: var(--text-2);
