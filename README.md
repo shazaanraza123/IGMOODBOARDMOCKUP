@@ -28,7 +28,7 @@ The dev server listens on port **47231** and on `0.0.0.0`. Open `http://127.0.0.
 
 ## What you can do right now
 
-The feed shows the hero post and six more. Saved has All posts, a static Collections grid, and Moodboards. Search there matches a board name, a caption, a handle, a style, or a note. Open a board for the masonry grid, notes, shortlist, and the post sheet (move, remove, edit the note). Find similar ranks other posts from the attributes you pick and can save one onto the current board. Develop an idea is still an empty screen. About has **Reset demo data**. Changes stay in `localStorage` under `moodboard-v1`.
+The feed shows the hero post and six more. Saved has All posts, a static Collections grid, and Moodboards. Search there matches a board name, a caption, a handle, a style, or a note. Open a board for the masonry grid, notes, shortlist, and the post sheet (move, remove, edit the note). Find similar ranks other posts from the attributes you pick and can save one onto the current board. On a creator board, suggested groups filter the grid, and Develop an idea writes three directions you can edit and save to Brief. About has **Reset demo data**. Changes stay in `localStorage` under `moodboard-v1`.
 
 | Route                | Screen          |
 | -------------------- | --------------- |
@@ -41,6 +41,10 @@ The feed shows the hero post and six more. Saved has All posts, a static Collect
 | `/about`             | About           |
 
 On viewports wider than 600px the app sits in a 390×844 phone frame. Under 600px it fills the screen. "Start Flow A" opens the feed. "Start Flow B" opens the Stage design refs board.
+
+### Try the Stage design refs carousel
+
+Open Stage design refs (Start Flow B, or Saved → Stage design refs). Suggested groups start with **Stage lighting · 8**. Tap **Develop an idea**. Carousel is already selected, and the row says it is based on 5 references. Tap **Generate 3 directions**. After a short shimmer, the first card is **The evolution of a stage**, Carousel · 7 slides, starting with "Opening comparison, then vs now". The other two stay collapsed. Edit the title if you want, then tap **Save to brief**. Open Brief from the board's more menu, or from Saved. Copy as text, or Remove it. Refresh keeps a saved direction under `moodboard-v1`.
 
 ### Try the Boot research search
 

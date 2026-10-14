@@ -66,3 +66,15 @@
 - A result opens its own sheet, not the board post sheet. It is not on the board yet, so that sheet does not offer a note, move, or remove.
 - No chips selected: "Pick at least one thing you like." Every remaining score is 0: "No close matches yet. Try fewer details." A tab with no rows while the other tabs have results: "Nothing in this tab." The tagged-product info line stays on screen whenever a source post is showing.
 - Footwear candidates score at least 1 from the category bonus, so Boot research does not reach "No close matches" while any off-board footwear post remains.
+
+## Milestone 6
+
+- Suggested groups are the top three attributes that appear on at least three posts. Ties break by which attribute shows up first as you walk the board in saved order. Stage design refs shows Stage lighting · 8, Archival photo · 8, and Monochrome · 6. One group can be on at a time. Tapping it again clears it. Notes and Shortlist still apply on top of that group.
+- Develop an idea starts from the five most recent posts in the selected group, or in the whole board when no group is on. The row shows up to five thumbnails. Tapping it opens every post in that pool so you can turn references on or off. Changing the format or the references clears the cards you already generated.
+- A template matches when its attributes appear on at least one of those references. Templates are tried in the spec's order, and the stage pair is first. The fifth-newest post on Stage design refs still has stage-lighting and archival-photo, so Carousel leads with "The evolution of a stage" and its seven slides. Reel uses 5–6 beats and starts with a hook. Campaign is a goal, an audience, three pillars, and a posting plan, shown as "Campaign · {n} parts".
+- The generator always returns three different directions. If the references match fewer than three templates, the rest come from "What these references share", "A closer read of the board", and "One idea, three cuts".
+- Credits name the first two handles and then "and {k} more". One source stays singular: "Credits 1 source: @handle".
+- Edit turns the title and the lines into fields. Done drops a blank line, and a blank title keeps the previous one. Save to brief becomes a disabled "Saved ✓". If you edit a direction that is already in the brief, Done updates that saved copy. Generating again uses a new id when the references or the format differ.
+- The skeleton waits 900ms. Reduced motion keeps the wait and turns off the shimmer. A status line reads "Generating 3 directions".
+- With no references left on, the screen says "Pick at least one reference." A group that filters the board down to nothing says "Nothing in this group."
+- Brief lists saved directions with the format, the numbered structure, and the sources. Copy as text toasts "Copied" even if the clipboard is blocked. Remove takes the direction off the list. Back on Brief returns to Saved. The board's more menu also opens Brief, and creator boards keep the Brief chip.

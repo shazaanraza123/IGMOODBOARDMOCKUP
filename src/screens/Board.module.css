@@ -21,6 +21,23 @@
   padding-bottom: 12px;
 }
 
+.groups {
+  padding: 4px 12px 4px;
+}
+
+.groups .chips {
+  padding: 0;
+}
+
+.groupLabel {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 0 4px 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 .withAction {
   padding-bottom: 8px;
 }

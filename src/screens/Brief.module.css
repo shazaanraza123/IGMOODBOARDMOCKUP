@@ -1,0 +1,77 @@
+.screen {
+  min-height: 100%;
+  padding-bottom: 24px;
+}
+
+.empty {
+  margin: 12px 16px 0;
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 12px 16px 0;
+  list-style: none;
+}
+
+.card {
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.meta,
+.sources {
+  margin: 6px 0 0;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.lines {
+  margin: 10px 0 0;
+  padding-left: 1.2em;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.lines li + li {
+  margin-top: 4px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.primary,
+.secondary {
+  flex: 1;
+  min-height: var(--tap);
+  border: 0;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.primary {
+  background: var(--blue);
+  color: #ffffff;
+}
+
+.secondary {
+  background: var(--surface-3);
+  color: var(--text);
+}

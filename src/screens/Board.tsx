@@ -8,10 +8,12 @@ import { NoteOverlay } from "../components/NoteOverlay";
 import { PostImage } from "../components/PostImage";
 import { boardTitle } from "../data/boardIds";
 import { getPost } from "../data/posts";
+import { suggestGroups } from "../lib/grouping";
+import { attributeLabel } from "../lib/labels";
 import { useMoodboardStore } from "../store/useMoodboardStore";
 import { BoardMenu } from "../sheets/BoardMenu";
 import { PostDetailSheet } from "../sheets/PostDetailSheet";
-import type { BoardItem } from "../types";
+import type { Attribute, BoardItem } from "../types";
 import styles from "./Board.module.css";
 
 const TILE_RATIOS = [
@@ -30,6 +32,7 @@ export function Board() {
     state.boards.find((entry) => entry.id === boardId),
   );
   const [filter, setFilter] = useState<Filter | null>(null);
+  const [group, setGroup] = useState<Attribute | null>(null);
   const [detailId, setDetailId] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const detailFocus = useRef<HTMLElement | null>(null);
@@ -43,7 +46,24 @@ export function Board() {
     setFilter((current) => (current === next ? null : next));
   };
 
+  const boardPosts = (board?.items ?? [])
+    .map((item) => getPost(item.postId))
+    .filter((post) => post !== undefined);
+  const groups = board?.kind === "creator" ? suggestGroups(boardPosts) : [];
+  const activeGroup = groups.some((entry) => entry.attribute === group)
+    ? group
+    : null;
+  const ideasTo = activeGroup
+    ? `/board/${boardId}/ideas?group=${activeGroup}`
+    : `/board/${boardId}/ideas`;
+
   const visible = (board?.items ?? []).filter((item) => {
+    if (
+      activeGroup &&
+      !getPost(item.postId)?.attributes.includes(activeGroup)
+    ) {
+      return false;
+    }
     if (filter === "notes") return Boolean(item.note);
     if (filter === "shortlist") return Boolean(item.shortlisted);
     return true;
@@ -104,6 +124,29 @@ export function Board() {
               Shortlist ({shortCount})
             </Chip>
           </div>
+          {groups.length > 0 ? (
+            <div className={styles.groups}>
+              <p className={styles.groupLabel}>
+                <Icon name="sparkle" size={16} />
+                Suggested groups
+              </p>
+              <div className={styles.chips}>
+                {groups.map((entry) => (
+                  <Chip
+                    key={entry.attribute}
+                    pressed={activeGroup === entry.attribute}
+                    onClick={() =>
+                      setGroup((current) =>
+                        current === entry.attribute ? null : entry.attribute,
+                      )
+                    }
+                  >
+                    {attributeLabel(entry.attribute)} · {entry.count}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          ) : null}
           {board.items.length === 0 ? (
             <p className={styles.empty}>
               Nothing here yet. Tap the bookmark on any post to add it.
@@ -112,7 +155,9 @@ export function Board() {
             <p className={styles.empty}>
               {filter === "notes"
                 ? "No notes on this board yet."
-                : "Nothing shortlisted yet."}
+                : filter === "shortlist"
+                  ? "Nothing shortlisted yet."
+                  : "Nothing in this group."}
             </p>
           ) : (
             <div
@@ -137,7 +182,7 @@ export function Board() {
           )}
           {board.kind === "creator" ? (
             <div className={styles.sticky}>
-              <Link className={styles.develop} to={`/board/${boardId}/ideas`}>
+              <Link className={styles.develop} to={ideasTo}>
                 <Icon name="sparkle" size={18} />
                 Develop an idea
               </Link>
