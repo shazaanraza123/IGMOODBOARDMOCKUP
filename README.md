@@ -20,15 +20,16 @@ The dev server listens on port **47231** and on `0.0.0.0`. Open `http://127.0.0.
 
 - React 18, TypeScript (strict), Vite
 - React Router v6
+- Zustand, persisted to `moodboard-v1`
 - CSS Modules and `src/styles/tokens.css` (no Tailwind)
 - Vitest and React Testing Library
 - ESLint and Prettier
 
-Zustand (persisted to `moodboard-v1`) and Framer Motion are part of the product and land with the milestones that use them.
+Framer Motion lands with the motion milestone.
 
 ## What you can do right now
 
-Milestone 1 is the scaffold. Every route is on screen, empty:
+Milestone 2 is the catalog and the store. About 40 posts and four boards are seeded. Changes persist in `localStorage` under `moodboard-v1`. About has **Reset demo data**. The feed, search, and idea tools are still empty screens:
 
 | Route                | Screen          |
 | -------------------- | --------------- |

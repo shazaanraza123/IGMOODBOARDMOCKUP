@@ -6,12 +6,20 @@ import styles from "./Header.module.css";
 type HeaderProps = {
   title: string;
   titleId: string;
+  subtitle?: string;
   wordmark?: boolean;
   backTo?: string;
   end?: ReactNode;
 };
 
-export function Header({ title, titleId, wordmark, backTo, end }: HeaderProps) {
+export function Header({
+  title,
+  titleId,
+  subtitle,
+  wordmark,
+  backTo,
+  end,
+}: HeaderProps) {
   if (wordmark) {
     return (
       <header className={styles.wordmarkBar}>
@@ -36,6 +44,7 @@ export function Header({ title, titleId, wordmark, backTo, end }: HeaderProps) {
         <h1 id={titleId} className={styles.title}>
           {title}
         </h1>
+        {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
       </div>
       <div className={styles.side}>{end}</div>
     </header>

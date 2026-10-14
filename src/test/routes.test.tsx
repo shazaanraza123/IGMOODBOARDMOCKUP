@@ -6,6 +6,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { App } from "../App";
 import { routerFuture } from "../routerFuture";
+import { useMoodboardStore } from "../store/useMoodboardStore";
 
 function renderAt(path: string) {
   return render(
@@ -108,6 +109,34 @@ describe("routes", () => {
     expect(screen.getByRole("status")).toHaveTextContent(
       "Not part of this concept",
     );
+  });
+
+  it("shows the seeded count on a board and can reset the demo", async () => {
+    const user = userEvent.setup();
+    const missing = renderAt("/board/missing");
+    expect(
+      screen.getByRole("heading", { name: "Moodboard" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Nothing here yet/)).toBeInTheDocument();
+    missing.unmount();
+
+    useMoodboardStore.getState().deleteBoard("b-stage");
+    const about = renderAt("/about");
+    await user.click(screen.getByRole("button", { name: "Reset demo data" }));
+    expect(screen.getByText("Demo data restored.")).toBeInTheDocument();
+    expect(
+      useMoodboardStore
+        .getState()
+        .boards.some((entry) => entry.id === "b-stage"),
+    ).toBe(true);
+    about.unmount();
+
+    renderAt("/board/b-stage");
+    expect(
+      screen.getByRole("heading", { name: "Stage design refs" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("12 saved · Private")).toBeInTheDocument();
+    expect(screen.queryByText(/Nothing here yet/)).not.toBeInTheDocument();
   });
 
   it("keeps the flow links outside the phone frame", () => {

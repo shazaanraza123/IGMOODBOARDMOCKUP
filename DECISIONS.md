@@ -16,3 +16,17 @@
 - Heart (feed) and New moodboard (Saved) are visible and do nothing for now. Heart is specified as a no-op. New moodboard is wired in a later milestone.
 - Any path that is not a screen redirects to the feed.
 - React Router v6 is opted into `v7_startTransition` and `v7_relativeSplatPath` so the console stays quiet.
+
+## Milestone 2
+
+- Zustand 5 persists `{ boards, savedIds, briefs }` under `moodboard-v1`. `getItem`, `setItem`, `removeItem`, and `JSON.parse` are in try/catch. Corrupt or blocked storage leaves the in-memory seed alone.
+- The store module is imported from `main.tsx` so persistence starts when the app loads.
+- Every seed board is private. New boards are private too. There is no privacy toggle until the board screen needs one.
+- `createBoard` trims the name, ignores a blank name, and returns the new id.
+- A post on a board is also in `savedIds`. `toggleSaved` does not remove board items. `removeFromBoard` does not unsave the post. A blank note is cleared.
+- `focus` is an optional box on `Post` (`x`, `y`, `w`, `h` as percentages), even though the section 4 sketch omitted it. Find similar can use it later and fall back to center when it is missing.
+- The five tagged boots use invented brands: Rowan Bootmakers, Pellam Last Co, Brine Footwear, Quill & Hide, and Kiln Bootworks. The three closest tagged matches (including the one that shares every hero attribute) sit on Summer fits, not Boot research, so a later similarity search of Boot research can still see them.
+- Fashion and packaging posts use the shared visual attributes (`typography`, `monochrome`, `carousel-layout`, `minimal-set`). The attribute list has no packaging-only tags.
+- Stage posts are weighted so `stage-lighting` and `archival-photo` each appear on 8 of 12. That is the pair the later idea template treats as "The evolution of a stage."
+- The board header now reads the store (`12 saved · Private`). The masonry grid is still later, so a seeded board no longer says it is empty. An unknown id still uses the empty copy.
+- `PostImage` exists now, with the tint placeholder and an `onError` fallback. The feed does not render posts yet. Expected files are listed in `public/images/README.md`.

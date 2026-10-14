@@ -25,6 +25,13 @@
   line-height: 1.2;
 }
 
+.subtitle {
+  margin: 1px 0 0;
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
 .wordmark {
   font-size: 26px;
   font-weight: 700;
