@@ -30,3 +30,15 @@
 - Stage posts are weighted so `stage-lighting` and `archival-photo` each appear on 8 of 12. That is the pair the later idea template treats as "The evolution of a stage."
 - The board header now reads the store (`12 saved · Private`). The masonry grid is still later, so a seeded board no longer says it is empty. An unknown id still uses the empty copy.
 - `PostImage` exists now, with the tint placeholder and an `onError` fallback. The feed does not render posts yet. Expected files are listed in `public/images/README.md`.
+
+## Milestone 3
+
+- Framer Motion runs the save sheet (spring, stiffness 400, damping 40) and the toast (12px slide and fade). Page transitions stay later.
+- The feed is `p-hero` plus six other footwear posts. The subtitle under the handle is the category label. Posts have no location field.
+- Every feed post starts saved, because every seed post is already on a board. The bookmark toast appears only when a post becomes saved. Unsaving does not toast.
+- A 500ms press opens the sheet and does not toggle saved. The click that follows that press is ignored. Keyboard users open the sheet from the toast's Choose button.
+- A board row saves or removes the post immediately. Done writes the note onto every board that currently holds the post, then closes. Leaving the sheet without Done keeps those membership changes and drops the unsaved note. A blank note is cleared by the store.
+- Boards created in the sheet are general and private.
+- Done says "Saved to {name}" for one board, "Saved to {n} moodboards" for several, and "Saved" when the post is saved but on no board. It stays quiet when the post is neither saved nor on a board.
+- The tab bar unmounts while a sheet is open. Reels, Messages, and Search use this same toast, with the title only.
+- The bookmark pop is a CSS scale from 1 to 1.2 and back. `prefers-reduced-motion` removes that pop and turns the sheet and toast slides into fades.

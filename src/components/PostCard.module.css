@@ -1,0 +1,107 @@
+.card {
+  padding-bottom: 8px;
+}
+
+.head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 6px 4px 6px 12px;
+}
+
+.avatar {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.who {
+  flex: 1;
+  min-width: 0;
+}
+
+.handle {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.subtitle {
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  padding: 2px 4px 0;
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap);
+  height: var(--tap);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.mark,
+.pop {
+  display: inline-flex;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pop {
+    animation: bookmark-pop 280ms ease;
+  }
+}
+
+@keyframes bookmark-pop {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.likes {
+  margin: 0;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.caption {
+  margin: 4px 0 0;
+  padding: 0 16px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.caption strong {
+  font-weight: 600;
+}
+
+.comments {
+  margin: 4px 0 8px;
+  padding: 0 16px;
+  color: var(--text-2);
+  font-size: 14px;
+}

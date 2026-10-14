@@ -21,15 +21,14 @@ The dev server listens on port **47231** and on `0.0.0.0`. Open `http://127.0.0.
 - React 18, TypeScript (strict), Vite
 - React Router v6
 - Zustand, persisted to `moodboard-v1`
+- Framer Motion for the save sheet and toasts
 - CSS Modules and `src/styles/tokens.css` (no Tailwind)
 - Vitest and React Testing Library
 - ESLint and Prettier
 
-Framer Motion lands with the motion milestone.
-
 ## What you can do right now
 
-Milestone 2 is the catalog and the store. About 40 posts and four boards are seeded. Changes persist in `localStorage` under `moodboard-v1`. About has **Reset demo data**. The feed, search, and idea tools are still empty screens:
+The feed shows the hero post and six more. Bookmark a post, choose or create a moodboard, add a note, and tap Done. That board and note stay after a refresh, in `localStorage` under `moodboard-v1`. About has **Reset demo data**. Search and the idea tools are still empty screens:
 
 | Route                | Screen          |
 | -------------------- | --------------- |
@@ -42,5 +41,9 @@ Milestone 2 is the catalog and the store. About 40 posts and four boards are see
 | `/about`             | About           |
 
 On viewports wider than 600px the app sits in a 390×844 phone frame. Under 600px it fills the screen. "Start Flow A" opens the feed. "Start Flow B" opens the Stage design refs board.
+
+### Try the save flow
+
+Every post in the feed starts saved. Tap the bookmark once to unsave it, then tap again. A toast says **Saved** and offers **Choose**. Pick a moodboard, or tap **New moodboard**, name it, and tap **Create**. Add a note and tap **Done**. Refresh the page. The new moodboard and the note are still there. Hold the bookmark for about half a second to open the sheet without toggling the save.
 
 "Instagram" is plain text in the system font. This prototype does not use Instagram or Meta logos.

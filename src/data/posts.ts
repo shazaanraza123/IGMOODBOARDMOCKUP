@@ -683,3 +683,34 @@ const postsById = new Map(posts.map((item) => [item.id, item]));
 export function getPost(id: string): Post | undefined {
   return postsById.get(id);
 }
+
+export const feedPostIds = [
+  "p-hero",
+  "p-boot-shaft",
+  "p-boot-square",
+  "p-boot-worn",
+  "p-boot-short-1",
+  "p-boot-short-2",
+  "p-quill",
+] as const;
+
+export function feedPosts(): Post[] {
+  return feedPostIds.map((id) => {
+    const found = postsById.get(id);
+    if (!found) throw new Error(`Missing feed post ${id}`);
+    return found;
+  });
+}
+
+export function categoryLabel(category: Post["category"]): string {
+  switch (category) {
+    case "footwear":
+      return "Footwear";
+    case "stage":
+      return "Stage design";
+    case "fashion":
+      return "Fashion";
+    case "packaging":
+      return "Packaging";
+  }
+}

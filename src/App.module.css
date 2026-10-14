@@ -19,22 +19,6 @@
   overflow-y: auto;
 }
 
-.toast {
-  position: absolute;
-  right: 16px;
-  bottom: calc(var(--tab-bar-height) + 8px);
-  left: 16px;
-  z-index: 2;
-  margin: 0;
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  background: var(--surface-2);
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.35;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-}
-
 @media (min-width: 601px) {
   .shell {
     height: 100%;
