@@ -14,6 +14,7 @@ export type MoodboardState = MoodboardData & {
   toggleSaved: (postId: string) => void;
   createBoard: (name: string, kind: Board["kind"]) => string | undefined;
   renameBoard: (boardId: string, name: string) => void;
+  setPrivate: (boardId: string, isPrivate: boolean) => void;
   deleteBoard: (boardId: string) => void;
   addToBoard: (boardId: string, postId: string, note?: string) => void;
   removeFromBoard: (boardId: string, postId: string) => void;
@@ -97,6 +98,14 @@ export const useMoodboardStore = create<MoodboardState>()(
             board.id === boardId
               ? touch({ ...board, name: trimmed }, now)
               : board,
+          ),
+        }));
+      },
+      setPrivate: (boardId, isPrivate) => {
+        const now = Date.now();
+        set((state) => ({
+          boards: state.boards.map((board) =>
+            board.id === boardId ? touch({ ...board, isPrivate }, now) : board,
           ),
         }));
       },

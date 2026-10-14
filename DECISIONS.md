@@ -42,3 +42,14 @@
 - Done says "Saved to {name}" for one board, "Saved to {n} moodboards" for several, and "Saved" when the post is saved but on no board. It stays quiet when the post is neither saved nor on a board.
 - The tab bar unmounts while a sheet is open. Reels, Messages, and Search use this same toast, with the title only.
 - The bookmark pop is a CSS scale from 1 to 1.2 and back. `prefers-reduced-motion` removes that pop and turns the sheet and toast slides into fades.
+
+## Milestone 4
+
+- Search lives in `src/lib/search.ts`. A blank query is not a search. A trimmed query matches board names, captions, handles, attribute labels, and notes, without caring about case. `tall-shaft` is read as "Tall shaft" (`src/lib/labels.ts`). Results are two groups, Boards and Posts. A post is listed once, and a matching note is kept so the reason it matched stays visible.
+- The empty search line is `Nothing matches "{query}". Try a style, like square toe.` Other empty lines that the spec did not write: "Nothing saved yet.", "No moodboards yet.", "No notes on this board yet.", and "Nothing shortlisted yet."
+- Collections is a fixed 3-column grid. It does not follow the store. The line above it is "This is how Saved works today." All posts lists `savedIds`. A saved post with no board still shows there.
+- Notes and Shortlist chips are on every board. Shopping boards also link Find similar from that row. Creator boards keep visible links for Find similar, Develop an idea, and Brief. Suggested groups stay with the later grouping work.
+- A board card can be held for 500ms, and it also has an Options button, so rename, delete, and privacy work from the keyboard. Delete asks "Delete {name}?" first and does not unsave the posts. New moodboards from Saved are general and private.
+- Share link copies the current URL and toasts "Link copied" even if the clipboard is blocked.
+- Move to lists the other boards that do not already hold the post. The detail note saves as you type, and the field keeps a trailing space while you type so the next word is not glued on. The stored note is trimmed. A blank note is cleared. That field has no 140-character cap, so the longer seed notes still fit. Attribute labels capitalize the first letter only, so `tall-shaft` reads "Tall shaft".
+- The masonry is two columns with a 4px gap. Tile heights repeat 3:4, 1:1, and 4:5. A note sits in a two-line card at the bottom of its tile. Shortlisted tiles get a "Shortlisted" pill.

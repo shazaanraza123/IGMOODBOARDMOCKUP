@@ -1,19 +1,57 @@
-import { Link, useParams } from "react-router-dom";
-import { Header } from "../components/Header";
+import { useRef, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Chip } from "../components/Chip";
+import { Header, IconButton } from "../components/Header";
+import { Icon } from "../components/Icon";
+import { MasonryGrid } from "../components/MasonryGrid";
+import { NoteOverlay } from "../components/NoteOverlay";
+import { PostImage } from "../components/PostImage";
 import { boardTitle } from "../data/boardIds";
+import { getPost } from "../data/posts";
 import { useMoodboardStore } from "../store/useMoodboardStore";
-import styles from "./screens.module.css";
+import { BoardMenu } from "../sheets/BoardMenu";
+import { PostDetailSheet } from "../sheets/PostDetailSheet";
+import type { BoardItem } from "../types";
+import styles from "./Board.module.css";
+
+const TILE_RATIOS = [
+  { width: 3, height: 4 },
+  { width: 1, height: 1 },
+  { width: 4, height: 5 },
+];
+
+type Filter = "notes" | "shortlist";
 
 export function Board() {
   const { id } = useParams();
   const boardId = id ?? "";
+  const navigate = useNavigate();
   const board = useMoodboardStore((state) =>
     state.boards.find((entry) => entry.id === boardId),
   );
+  const [filter, setFilter] = useState<Filter | null>(null);
+  const [detailId, setDetailId] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const detailFocus = useRef<HTMLElement | null>(null);
+  const moreRef = useRef<HTMLButtonElement>(null);
   const title = board?.name ?? boardTitle(boardId);
   const subtitle = board
     ? `${board.items.length} saved · ${board.isPrivate ? "Private" : "Public"}`
     : undefined;
+
+  const toggle = (next: Filter) => {
+    setFilter((current) => (current === next ? null : next));
+  };
+
+  const visible = (board?.items ?? []).filter((item) => {
+    if (filter === "notes") return Boolean(item.note);
+    if (filter === "shortlist") return Boolean(item.shortlisted);
+    return true;
+  });
+
+  const noteCount = board?.items.filter((item) => item.note).length ?? 0;
+  const shortCount =
+    board?.items.filter((item) => item.shortlisted).length ?? 0;
 
   return (
     <section className={styles.screen} aria-labelledby="board-title">
@@ -22,25 +60,146 @@ export function Board() {
         titleId="board-title"
         subtitle={subtitle}
         backTo="/saved"
+        end={
+          board ? (
+            <IconButton
+              ref={moreRef}
+              label="More"
+              onClick={() => setMenuOpen(true)}
+            >
+              <Icon name="more" />
+            </IconButton>
+          ) : null
+        }
       />
-      <div className={styles.body}>
-        {!board || board.items.length === 0 ? (
-          <p className={styles.empty}>
-            Nothing here yet. Tap the bookmark on any post to add it.
-          </p>
-        ) : null}
-        <nav className={styles.actions} aria-label="Board actions">
-          <Link className={styles.action} to={`/board/${boardId}/similar`}>
-            Find similar
-          </Link>
-          <Link className={styles.action} to={`/board/${boardId}/ideas`}>
-            Develop an idea
-          </Link>
-          <Link className={styles.action} to="/brief">
-            Brief
-          </Link>
-        </nav>
-      </div>
+      {!board ? (
+        <p className={styles.empty}>
+          Nothing here yet. Tap the bookmark on any post to add it.
+        </p>
+      ) : (
+        <>
+          {board.kind === "creator" ? (
+            <div className={styles.links}>
+              <Chip to={`/board/${boardId}/similar`} tone="blue">
+                <Icon name="sparkle" size={16} />
+                Find similar
+              </Chip>
+              <Chip to="/brief">Brief</Chip>
+            </div>
+          ) : null}
+          <div className={styles.chips}>
+            {board.kind === "shopping" ? (
+              <Chip to={`/board/${boardId}/similar`} tone="blue">
+                <Icon name="sparkle" size={16} />
+                Find similar
+              </Chip>
+            ) : null}
+            <Chip pressed={filter === "notes"} onClick={() => toggle("notes")}>
+              Notes ({noteCount})
+            </Chip>
+            <Chip
+              pressed={filter === "shortlist"}
+              onClick={() => toggle("shortlist")}
+            >
+              Shortlist ({shortCount})
+            </Chip>
+          </div>
+          {board.items.length === 0 ? (
+            <p className={styles.empty}>
+              Nothing here yet. Tap the bookmark on any post to add it.
+            </p>
+          ) : visible.length === 0 ? (
+            <p className={styles.empty}>
+              {filter === "notes"
+                ? "No notes on this board yet."
+                : "Nothing shortlisted yet."}
+            </p>
+          ) : (
+            <div
+              className={
+                board.kind === "creator" ? styles.withAction : undefined
+              }
+            >
+              <MasonryGrid>
+                {visible.map((item, index) => (
+                  <Tile
+                    key={item.postId}
+                    item={item}
+                    index={index}
+                    onOpen={(anchor) => {
+                      detailFocus.current = anchor;
+                      setDetailId(item.postId);
+                    }}
+                  />
+                ))}
+              </MasonryGrid>
+            </div>
+          )}
+          {board.kind === "creator" ? (
+            <div className={styles.sticky}>
+              <Link className={styles.develop} to={`/board/${boardId}/ideas`}>
+                <Icon name="sparkle" size={18} />
+                Develop an idea
+              </Link>
+              <p className={styles.helper}>
+                Uses only the posts in this board.
+              </p>
+            </div>
+          ) : null}
+        </>
+      )}
+      <PostDetailSheet
+        boardId={boardId}
+        postId={detailId}
+        onClose={() => setDetailId(null)}
+        returnFocusRef={detailFocus}
+      />
+      <BoardMenu
+        board={menuOpen ? (board ?? null) : null}
+        includeShare
+        onClose={() => setMenuOpen(false)}
+        onDeleted={() => navigate("/saved")}
+        returnFocusRef={moreRef}
+      />
     </section>
+  );
+}
+
+function Tile({
+  item,
+  index,
+  onOpen,
+}: {
+  item: BoardItem;
+  index: number;
+  onOpen: (anchor: HTMLElement) => void;
+}) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const post = getPost(item.postId);
+  if (!post) return null;
+  const ratio = TILE_RATIOS[index % TILE_RATIOS.length] ?? TILE_RATIOS[0];
+  if (!ratio) return null;
+
+  return (
+    <button
+      ref={buttonRef}
+      type="button"
+      className={styles.tile}
+      onClick={() => {
+        if (buttonRef.current) onOpen(buttonRef.current);
+      }}
+    >
+      <PostImage
+        image={post.image}
+        imageAlt={post.imageAlt}
+        tint={post.tint}
+        width={ratio.width}
+        height={ratio.height}
+      />
+      {item.note ? <NoteOverlay text={item.note} /> : null}
+      {item.shortlisted ? (
+        <span className={styles.pill}>Shortlisted</span>
+      ) : null}
+    </button>
   );
 }

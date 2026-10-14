@@ -1,0 +1,9 @@
+.masonry {
+  columns: 2;
+  column-gap: 4px;
+}
+
+.masonry > * {
+  break-inside: avoid;
+  margin-bottom: 4px;
+}

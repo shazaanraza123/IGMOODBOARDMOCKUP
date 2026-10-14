@@ -1,0 +1,59 @@
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+
+.caption {
+  margin: 12px 16px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.caption strong {
+  font-weight: 600;
+}
+
+.label {
+  display: block;
+  margin: 14px 16px 6px;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.note {
+  display: block;
+  width: calc(100% - 32px);
+  margin: 0 16px 8px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  color: var(--text);
+  font: inherit;
+  resize: vertical;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+}
+
+.empty {
+  margin: 8px 16px 16px;
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.35;
+}

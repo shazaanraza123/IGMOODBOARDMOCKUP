@@ -1,0 +1,63 @@
+.body {
+  padding: 0 0 calc(12px + env(safe-area-inset-bottom, 0px));
+}
+
+.row,
+.danger,
+.primary {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+}
+
+.danger {
+  color: var(--text);
+}
+
+.confirm,
+.label {
+  margin: 0;
+  padding: 4px 16px 12px;
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.rename {
+  padding: 0 16px 8px;
+}
+
+.label {
+  padding: 0 0 6px;
+}
+
+.input {
+  width: 100%;
+  min-height: var(--tap);
+  margin-bottom: 8px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.primary {
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--blue);
+  color: #ffffff;
+}
+
+.primary:disabled {
+  opacity: 0.4;
+}

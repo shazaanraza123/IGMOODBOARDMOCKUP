@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "./Icon";
 import styles from "./Header.module.css";
@@ -54,21 +54,30 @@ export function Header({
 type IconButtonProps = {
   label: string;
   to?: string;
+  onClick?: () => void;
   children: ReactNode;
 };
 
-export function IconButton({ label, to, children }: IconButtonProps) {
-  if (to) {
-    return (
-      <Link to={to} className={styles.iconButton} aria-label={label}>
-        {children}
-      </Link>
-    );
-  }
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  function IconButton({ label, to, onClick, children }, ref) {
+    if (to) {
+      return (
+        <Link to={to} className={styles.iconButton} aria-label={label}>
+          {children}
+        </Link>
+      );
+    }
 
-  return (
-    <button type="button" className={styles.iconButton} aria-label={label}>
-      {children}
-    </button>
-  );
-}
+    return (
+      <button
+        ref={ref}
+        type="button"
+        className={styles.iconButton}
+        aria-label={label}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    );
+  },
+);
