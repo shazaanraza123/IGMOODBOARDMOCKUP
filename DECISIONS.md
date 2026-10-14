@@ -87,7 +87,7 @@
 - Result tabs on Find similar use a tab panel, and both tab lists move with Home and End as well as the arrow keys.
 - Empty lines share one component. The sentences are the ones from earlier milestones.
 - About states the two flows, why Exact match is rare, that a note stays on the save, that moodboards live in Saved, and that Find similar and Develop an idea are optional. Reset demo data is still there. The repo link is `https://github.com/shazaanraza123/IGMOODBOARDMOCKUP`, the checkout this was built in.
-- The README points at `docs/walkthrough.gif` as the walkthrough slot. That file is not recorded yet.
+- The README points at `docs/walkthrough.gif`. That recording walks the feed save, Boot research Find similar, and Stage design refs through Develop an idea.
 
 ## Milestone 8
 
