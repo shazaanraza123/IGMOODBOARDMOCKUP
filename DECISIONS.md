@@ -88,3 +88,7 @@
 - Empty lines share one component. The sentences are the ones from earlier milestones.
 - About states the two flows, why Exact match is rare, that a note stays on the save, that moodboards live in Saved, and that Find similar and Develop an idea are optional. Reset demo data is still there. The repo link is `https://github.com/shazaanraza123/IGMOODBOARDMOCKUP`, the checkout this was built in.
 - The README points at `docs/walkthrough.gif` as the walkthrough slot. That file is not recorded yet.
+
+## Milestone 8
+
+- The spec's deploy line names `shazaanraza123/instagram-moodboard`. This checkout pushes to the repo the user named, `https://github.com/shazaanraza123/IGMOODBOARDMOCKUP.git`, which is the `github` remote. That other repo was not created and was not used. The push is a normal push of `main`, not a force-push.
