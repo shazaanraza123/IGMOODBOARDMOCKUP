@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, type Location } from "react-router-dom";
 import { About } from "./screens/About";
 import { Board } from "./screens/Board";
 import { Brief } from "./screens/Brief";
@@ -7,9 +7,9 @@ import { FindSimilar } from "./screens/FindSimilar";
 import { Ideas } from "./screens/Ideas";
 import { Saved } from "./screens/Saved";
 
-export function AppRoutes() {
+export function AppRoutes({ location }: { location?: Location }) {
   return (
-    <Routes>
+    <Routes location={location}>
       <Route path="/" element={<Feed />} />
       <Route path="/saved" element={<Saved />} />
       <Route path="/board/:id/similar" element={<FindSimilar />} />

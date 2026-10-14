@@ -14,7 +14,6 @@
 }
 
 .from,
-.empty,
 .footer,
 .status {
   color: var(--text-2);
@@ -78,11 +77,6 @@
 
 .generate:disabled {
   opacity: 0.55;
-}
-
-.empty {
-  margin: 12px 0 0;
-  font-size: 14px;
 }
 
 .status {

@@ -75,6 +75,15 @@ describe("routes", () => {
 
     await user.click(screen.getByRole("link", { name: "About" }));
     expect(screen.getByRole("heading", { name: "About" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Flow A" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Flow B" })).toBeInTheDocument();
+    expect(
+      screen.getByText(/Exact match is rare on purpose/),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "GitHub repo" })).toHaveAttribute(
+      "href",
+      "https://github.com/shazaanraza123/IGMOODBOARDMOCKUP",
+    );
     expect(
       screen.getByText(
         "Independent concept by Shazaan Raza. Not affiliated with or endorsed by Instagram or Meta.",

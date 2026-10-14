@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import { BoardCard } from "../components/BoardCard";
+import { EmptyState } from "../components/EmptyState";
 import { Header, IconButton } from "../components/Header";
 import { Icon } from "../components/Icon";
 import { PostImage } from "../components/PostImage";
@@ -53,13 +54,16 @@ export function Saved() {
 
   const onTabKey = (event: KeyboardEvent<HTMLDivElement>) => {
     const index = TABS.indexOf(tab);
-    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+    let nextIndex = index;
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % TABS.length;
+    else if (event.key === "ArrowLeft") {
+      nextIndex = (index - 1 + TABS.length) % TABS.length;
+    } else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = TABS.length - 1;
+    else return;
     event.preventDefault();
-    const next =
-      event.key === "ArrowRight"
-        ? TABS[(index + 1) % TABS.length]
-        : TABS[(index - 1 + TABS.length) % TABS.length];
-    if (!next) return;
+    const next = TABS[nextIndex];
+    if (!next || next === tab) return;
     setTab(next);
     tabRefs.current[next]?.focus();
   };
@@ -119,7 +123,7 @@ export function Saved() {
           className={styles.panel}
         >
           {savedIds.length === 0 ? (
-            <p className={styles.empty}>Nothing saved yet.</p>
+            <EmptyState>Nothing saved yet.</EmptyState>
           ) : (
             <div className={styles.tiles}>
               {savedIds.map((postId) => {
@@ -205,9 +209,9 @@ export function Saved() {
           </div>
           {result ? (
             result.boardIds.length === 0 && result.posts.length === 0 ? (
-              <p className={styles.empty}>
+              <EmptyState>
                 Nothing matches "{trimmed}". Try a style, like square toe.
-              </p>
+              </EmptyState>
             ) : (
               <div className={styles.results}>
                 {result.boardIds.length > 0 ? (
@@ -289,7 +293,7 @@ export function Saved() {
               </div>
             )
           ) : boards.length === 0 ? (
-            <p className={styles.empty}>No moodboards yet.</p>
+            <EmptyState>No moodboards yet.</EmptyState>
           ) : (
             <div className={styles.grid}>
               {boards.map((board) => (

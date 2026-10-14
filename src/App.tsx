@@ -3,8 +3,8 @@ import { ChromeContext } from "./components/chrome";
 import { DeviceFrame } from "./components/DeviceFrame";
 import { TabBar } from "./components/TabBar";
 import { ToastProvider, ToastViewport } from "./components/Toast";
+import { ScreenTransition } from "./components/ScreenTransition";
 import { useToast } from "./components/toastState";
-import { AppRoutes } from "./routes";
 import styles from "./App.module.css";
 
 const UNAVAILABLE = "Not part of this concept";
@@ -29,7 +29,7 @@ function AppShell() {
         <div className={styles.shell}>
           <div className={styles.status} aria-hidden="true" />
           <main className={styles.main}>
-            <AppRoutes />
+            <ScreenTransition />
           </main>
           {sheetOpen ? null : (
             <TabBar onUnavailable={() => show({ title: UNAVAILABLE })} />

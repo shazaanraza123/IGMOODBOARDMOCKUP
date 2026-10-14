@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Chip } from "../components/Chip";
+import { EmptyState } from "../components/EmptyState";
 import { Header, IconButton } from "../components/Header";
 import { Icon } from "../components/Icon";
 import { MasonryGrid } from "../components/MasonryGrid";
@@ -93,9 +94,9 @@ export function Board() {
         }
       />
       {!board ? (
-        <p className={styles.empty}>
+        <EmptyState>
           Nothing here yet. Tap the bookmark on any post to add it.
-        </p>
+        </EmptyState>
       ) : (
         <>
           {board.kind === "creator" ? (
@@ -148,17 +149,17 @@ export function Board() {
             </div>
           ) : null}
           {board.items.length === 0 ? (
-            <p className={styles.empty}>
+            <EmptyState>
               Nothing here yet. Tap the bookmark on any post to add it.
-            </p>
+            </EmptyState>
           ) : visible.length === 0 ? (
-            <p className={styles.empty}>
+            <EmptyState>
               {filter === "notes"
                 ? "No notes on this board yet."
                 : filter === "shortlist"
                   ? "Nothing shortlisted yet."
                   : "Nothing in this group."}
-            </p>
+            </EmptyState>
           ) : (
             <div
               className={

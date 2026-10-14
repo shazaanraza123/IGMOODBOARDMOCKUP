@@ -2,7 +2,15 @@
 
 Instagram's Saved tab is where inspiration gets lost. Moodboard turns Saved into a workspace for finding more of what you like, and for making something of your own.
 
+![Walkthrough](docs/walkthrough.gif)
+
 Independent concept by Shazaan Raza. Not affiliated with or endorsed by Instagram or Meta.
+
+## Two flows
+
+**Flow A. I like this. Help me find more of it.** Save a post from the feed, keep a note on it, and pick the details you want more of.
+
+**Flow B. This inspires me. Help me make something of my own.** Group a creator board, generate directions from only those posts, and save one to a brief.
 
 ## Run locally
 
@@ -21,14 +29,44 @@ The dev server listens on port **47231** and on `0.0.0.0`. Open `http://127.0.0.
 - React 18, TypeScript (strict), Vite
 - React Router v6
 - Zustand, persisted to `moodboard-v1`
-- Framer Motion for the save sheet and toasts
+- Framer Motion for sheets, toasts, and screen changes
 - CSS Modules and `src/styles/tokens.css` (no Tailwind)
 - Vitest and React Testing Library
 - ESLint and Prettier
 
-## What you can do right now
+## Design decisions
 
-The feed shows the hero post and six more. Saved has All posts, a static Collections grid, and Moodboards. Search there matches a board name, a caption, a handle, a style, or a note. Open a board for the masonry grid, notes, shortlist, and the post sheet (move, remove, edit the note). Find similar ranks other posts from the attributes you pick and can save one onto the current board. On a creator board, suggested groups filter the grid, and Develop an idea writes three directions you can edit and save to Brief. About has **Reset demo data**. Changes stay in `localStorage` under `moodboard-v1`.
+### Result labels
+
+Find similar uses three labels, and Exact match is rare on purpose. It shows only when a product is tagged, it has every detail you picked, and it is the same kind of post. Similar product is tagged but misses something. Inspiration has no product tag, so it is a reference rather than a shop result.
+
+### Notes on save
+
+A note belongs to that post on that board. Saving does not force you to choose a moodboard. Taking a post off a board does not unsave it.
+
+### Moodboards live in Saved
+
+There is no new tab. Moodboards sit in Saved, next to All posts and Collections. Profile in the tab bar opens Saved.
+
+### AI is optional
+
+Find similar and Develop an idea are help you can skip. You can save, note, and rearrange a board without generating anything.
+
+## What's simulated
+
+Similarity scores shared attributes. An embedding model can replace it through `SimilarityProvider`. Directions come from templates filled with the posts you picked. An LLM grounded in those posts can replace it through `IdeaProvider`. Neither one calls the network.
+
+## Photos
+
+Real photos are not in the repo. Until a file is there, each post uses its tint and the description in `imageAlt`. Add JPEGs as described in [`public/images/README.md`](public/images/README.md).
+
+## Disclaimer
+
+Independent concept by Shazaan Raza. Not affiliated with or endorsed by Instagram or Meta. "Instagram" is plain text in the system font. This prototype does not use Instagram or Meta logos.
+
+## Try it
+
+On viewports wider than 600px the app sits in a 390×844 phone frame. Under 600px it fills the screen. "Start Flow A" opens the feed. "Start Flow B" opens the Stage design refs board. Changes stay in `localStorage` under `moodboard-v1`. About has **Reset demo data**.
 
 | Route                | Screen          |
 | -------------------- | --------------- |
@@ -39,8 +77,6 @@ The feed shows the hero post and six more. Saved has All posts, a static Collect
 | `/board/:id/ideas`   | Develop an idea |
 | `/brief`             | Brief           |
 | `/about`             | About           |
-
-On viewports wider than 600px the app sits in a 390×844 phone frame. Under 600px it fills the screen. "Start Flow A" opens the feed. "Start Flow B" opens the Stage design refs board.
 
 ### Try the Stage design refs carousel
 
@@ -57,5 +93,3 @@ Open Saved (the profile icon). The Moodboards tab is selected. In **Search board
 ### Try the save flow
 
 Every post in the feed starts saved. Tap the bookmark once to unsave it, then tap again. A toast says **Saved** and offers **Choose**. Pick a moodboard, or tap **New moodboard**, name it, and tap **Create**. Add a note and tap **Done**. Refresh the page. The new moodboard and the note are still there. Hold the bookmark for about half a second to open the sheet without toggling the save.
-
-"Instagram" is plain text in the system font. This prototype does not use Instagram or Meta logos.

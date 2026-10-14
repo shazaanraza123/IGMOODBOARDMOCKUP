@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { EmptyState } from "../components/EmptyState";
 import { Header, IconButton } from "../components/Header";
 import { Icon } from "../components/Icon";
 import { PostCard } from "../components/PostCard";
@@ -26,7 +27,7 @@ export function Feed() {
       />
       {posts.length === 0 ? (
         <div className={styles.body}>
-          <p className={styles.empty}>Posts will show up here.</p>
+          <EmptyState>Posts will show up here.</EmptyState>
         </div>
       ) : (
         posts.map((post) => (

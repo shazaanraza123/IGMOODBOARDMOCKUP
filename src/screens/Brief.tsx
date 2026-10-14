@@ -1,3 +1,4 @@
+import { EmptyState } from "../components/EmptyState";
 import { getPost } from "../data/posts";
 import { Header } from "../components/Header";
 import { useToast } from "../components/toastState";
@@ -23,7 +24,7 @@ export function Brief() {
     <section className={styles.screen} aria-labelledby="brief-title">
       <Header title="Brief" titleId="brief-title" backTo="/saved" />
       {briefs.length === 0 ? (
-        <p className={styles.empty}>Save a direction and it shows up here.</p>
+        <EmptyState>Save a direction and it shows up here.</EmptyState>
       ) : (
         <ul className={styles.list}>
           {briefs.map((direction) => {

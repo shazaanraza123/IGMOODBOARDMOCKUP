@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Chip } from "../components/Chip";
+import { EmptyState } from "../components/EmptyState";
 import { DirectionCard } from "../components/DirectionCard";
 import { Header } from "../components/Header";
 import { Icon } from "../components/Icon";
@@ -149,9 +150,9 @@ export function Ideas() {
         backTo={`/board/${boardId}`}
       />
       {!board || pool.length === 0 ? (
-        <p className={styles.empty}>
+        <EmptyState>
           Nothing here yet. Tap the bookmark on any post to add it.
-        </p>
+        </EmptyState>
       ) : (
         <div className={styles.body}>
           <div className={styles.formats}>
@@ -200,7 +201,7 @@ export function Ideas() {
             Generate 3 directions
           </button>
           {included.length === 0 ? (
-            <p className={styles.empty}>Pick at least one reference.</p>
+            <EmptyState>Pick at least one reference.</EmptyState>
           ) : null}
           {generating ? (
             <div aria-busy="true">

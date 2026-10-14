@@ -1,0 +1,12 @@
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

@@ -101,13 +101,6 @@
   color: var(--blue-text);
 }
 
-.empty {
-  margin: 16px;
-  color: var(--text-2);
-  font-size: 14px;
-  line-height: 1.35;
-}
-
 .info {
   display: flex;
   gap: 8px;

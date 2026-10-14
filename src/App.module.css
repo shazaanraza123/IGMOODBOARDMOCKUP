@@ -14,9 +14,10 @@
 }
 
 .main {
+  position: relative;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 @media (min-width: 601px) {

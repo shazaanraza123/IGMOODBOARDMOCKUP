@@ -78,3 +78,13 @@
 - The skeleton waits 900ms. Reduced motion keeps the wait and turns off the shimmer. A status line reads "Generating 3 directions".
 - With no references left on, the screen says "Pick at least one reference." A group that filters the board down to nothing says "Nothing in this group."
 - Brief lists saved directions with the format, the numbered structure, and the sources. Copy as text toasts "Copied" even if the clipboard is blocked. Remove takes the direction off the list. Back on Brief returns to Saved. The board's more menu also opens Brief, and creator boards keep the Brief chip.
+
+## Milestone 7
+
+- Screen changes slide horizontally for 220ms. A push comes in from the right and a back navigation comes in from the left. `prefers-reduced-motion` fades that slide instead, and it also drops the bookmark pop. Sheets and toasts were already a fade in that case. The generate shimmer was already still.
+- Vitest renders one screen at a time, with no slide. The tests query the page the moment a link is clicked, and a 220ms exit would leave two screens in the tree.
+- After a navigation in the browser, focus moves to that screen's heading so a keyboard user is not left on a control that just unmounted. The heading is not in the tab order.
+- Result tabs on Find similar use a tab panel, and both tab lists move with Home and End as well as the arrow keys.
+- Empty lines share one component. The sentences are the ones from earlier milestones.
+- About states the two flows, why Exact match is rare, that a note stays on the save, that moodboards live in Saved, and that Find similar and Develop an idea are optional. Reset demo data is still there. The repo link is `https://github.com/shazaanraza123/IGMOODBOARDMOCKUP`, the checkout this was built in.
+- The README points at `docs/walkthrough.gif` as the walkthrough slot. That file is not recorded yet.

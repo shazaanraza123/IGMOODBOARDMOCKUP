@@ -2,13 +2,6 @@
   min-height: 100%;
 }
 
-.empty {
-  margin: 12px 16px 0;
-  color: var(--text-2);
-  font-size: 14px;
-  line-height: 1.35;
-}
-
 .links,
 .chips {
   display: flex;
