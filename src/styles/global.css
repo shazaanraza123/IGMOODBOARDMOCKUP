@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#root {
+  min-height: 100%;
+}
+
+html {
+  color-scheme: dark;
+}
+
+:root {
+  --tab-bar-height: calc(49px + max(34px, env(safe-area-inset-bottom, 0px)));
+}
+
+body {
+  margin: 0;
+  background: #000000;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 601px) {
+  body {
+    background: #0b0b0b;
+  }
+}
+
+button,
+input,
+a {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue-text);
+  outline-offset: 2px;
+}
+
+h1,
+p {
+  margin: 0;
+}
