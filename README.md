@@ -28,7 +28,7 @@ The dev server listens on port **47231** and on `0.0.0.0`. Open `http://127.0.0.
 
 ## What you can do right now
 
-The feed shows the hero post and six more. Saved has All posts, a static Collections grid, and Moodboards. Search there matches a board name, a caption, a handle, a style, or a note. Open a board for the masonry grid, notes, shortlist, and the post sheet (move, remove, edit the note). Find similar and Develop an idea are still empty screens. About has **Reset demo data**. Changes stay in `localStorage` under `moodboard-v1`.
+The feed shows the hero post and six more. Saved has All posts, a static Collections grid, and Moodboards. Search there matches a board name, a caption, a handle, a style, or a note. Open a board for the masonry grid, notes, shortlist, and the post sheet (move, remove, edit the note). Find similar ranks other posts from the attributes you pick and can save one onto the current board. Develop an idea is still an empty screen. About has **Reset demo data**. Changes stay in `localStorage` under `moodboard-v1`.
 
 | Route                | Screen          |
 | -------------------- | --------------- |
@@ -41,6 +41,10 @@ The feed shows the hero post and six more. Saved has All posts, a static Collect
 | `/about`             | About           |
 
 On viewports wider than 600px the app sits in a 390×844 phone frame. Under 600px it fills the screen. "Start Flow A" opens the feed. "Start Flow B" opens the Stage design refs board.
+
+### Try the Boot research search
+
+Open Boot research from Saved, then tap **Find similar**. Tall shaft and Distressed leather start on. The grid leads with the Rowan pair and the Pellam pair, both labeled **Exact match** and "via tagged post", then the Brine pair as **Similar product**, then the brown suede pair as **Inspiration** with the handle flea.found. Turn both chips off and the screen asks you to pick at least one thing you like. Open the Rowan card and tap **Save to this board**. The button switches to Saved, that card leaves the results, and the post is on Boot research. Refresh keeps it under `moodboard-v1`.
 
 ### Try search by note
 

@@ -53,3 +53,16 @@
 - Share link copies the current URL and toasts "Link copied" even if the clipboard is blocked.
 - Move to lists the other boards that do not already hold the post. The detail note saves as you type, and the field keeps a trailing space while you type so the next word is not glued on. The stored note is trimmed. A blank note is cleared. That field has no 140-character cap, so the longer seed notes still fit. Attribute labels capitalize the first letter only, so `tall-shaft` reads "Tall shaft".
 - The masonry is two columns with a 4px gap. Tile heights repeat 3:4, 1:1, and 4:5. A note sits in a two-line card at the bottom of its tile. Shortlisted tiles get a "Shortlisted" pill.
+
+## Milestone 5
+
+- The score is `2 * shared selected attributes + 1 * other source attributes the candidate also has + 1 when the category matches`. A score of 0 is dropped. Results sort by score, then likes, and stop at 12. The source post and anything already on the board are left out.
+- "Exact match" needs a product tag, every selected attribute, and the same category. A tagged post that misses a selected attribute is "Similar product". An untagged post is "Inspiration" even when the attributes line up. With only Tall shaft and Distressed leather, Rowan and Pellam are both Exact match. Selecting every hero attribute leaves Rowan as Exact match and Pellam as Similar product.
+- The card byline is "via tagged post" when the result has a product tag, and the handle otherwise.
+- The highlight pill uses the feed category label, so footwear reads "Footwear". The spec's example word was "Boots".
+- A post with no focus box uses a centered box: x 25, y 25, width 50, height 50.
+- The first two attributes of the source start selected. `?post=` is used when that post is on the board. Otherwise the hero is used if it is on the board, and otherwise the first item. Changing the source resets the selection to those first two.
+- "Save to this board" calls `addToBoard`. The button becomes a disabled "Saved", and the post leaves the results. Shortlist adds the post first when it is not on the board, then toggles the shortlist.
+- A result opens its own sheet, not the board post sheet. It is not on the board yet, so that sheet does not offer a note, move, or remove.
+- No chips selected: "Pick at least one thing you like." Every remaining score is 0: "No close matches yet. Try fewer details." A tab with no rows while the other tabs have results: "Nothing in this tab." The tagged-product info line stays on screen whenever a source post is showing.
+- Footwear candidates score at least 1 from the category bonus, so Boot research does not reach "No close matches" while any off-board footwear post remains.

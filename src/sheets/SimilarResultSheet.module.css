@@ -1,0 +1,46 @@
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+}
+
+.caption {
+  margin: 12px 16px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.caption strong {
+  font-weight: 600;
+}
+
+.primary,
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 32px);
+  min-height: var(--tap);
+  margin: 0 16px 8px;
+  border: 0;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.primary {
+  background: var(--blue);
+  color: #ffffff;
+}
+
+.primary:disabled {
+  opacity: 0.55;
+}
+
+.row {
+  justify-content: flex-start;
+  padding: 0 14px;
+  background: var(--surface-3);
+  color: var(--text);
+}
