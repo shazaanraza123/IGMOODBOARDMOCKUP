@@ -92,3 +92,15 @@
 ## Milestone 8
 
 - The spec's deploy line names `shazaanraza123/instagram-moodboard`. This checkout pushes to the repo the user named, `https://github.com/shazaanraza123/IGMOODBOARDMOCKUP.git`, which is the `github` remote. That other repo was not created and was not used. The push is a normal push of `main`, not a force-push.
+
+## Milestone 9
+
+- `igmoodboard.vercel.app` was checked before this pass. It serves the same bundle as this checkout (`index-Btl6am-U.js`), the same feed posts, and no story tray. The tab bar is already the five items Home, Reels, Messages, Search, and Profile. There is no sixth item and no "New" tab. New moodboard stays a header action on Saved.
+- A missing photo (the brown suede result, and any other file that 404s) now shows a framed "No photo yet" tile. The alt text stays on the accessible name and is no longer painted on the tint.
+- Develop an idea shows a ghost direction card and the line "Three directions will appear here" before you generate. Generate sits in a sticky dock with "Only uses posts on this board." The fact-check line stays under it. Format is a segmented control. Reference thumbs are larger and brighter. Direction cards list the source handles above the slides.
+- The feed heart path no longer spikes out of the icon box. Find similar has one heading. The crop frame is labeled Focus, sits clear of the category name, and can be dragged. Selected chips stay on the dark theme with a blue tint. Result grids use two columns, and the middle label is "Similar products", matching the tab.
+- Notes on tiles are the note itself, two lines, without a "Note ·" prefix. Overflow buttons on board cards and the board header sit inside the 16px screen margin. Tile ratios stop at 4:5 so the overlay covers less of the photo.
+- Brief is a tab on Saved and still a route. A saved direction is a draft: title, credited handles, and slide or beat frames, with copy as text kept as a secondary action. The empty line says where directions come from.
+- Any board can be made public, given a `/board/:id` link, and given members after it exists. Comments live on the board.
+- Saves older than 90 days show up under "Still into this?" on Moodboards, three at a time, with Keep or Remove. After 10 saves the feed offers "You've saved 10 posts — organize them into a moodboard?" The save sheet explains what a moodboard is. Dismissing the nudge is stored on `moodboard-v1` with `keptKeys`.
+- `prefers-reduced-motion` is unchanged: page fades, no bookmark pop, no skeleton shimmer.

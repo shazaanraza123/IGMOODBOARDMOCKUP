@@ -29,7 +29,9 @@ describe("saved search", () => {
       "aria-selected",
       "true",
     );
-    expect(screen.getByText("Boot research")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Boot research/ }),
+    ).toBeInTheDocument();
 
     await user.type(
       screen.getByRole("textbox", { name: "Search boards, posts and notes" }),

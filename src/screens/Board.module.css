@@ -88,3 +88,80 @@
   line-height: 1.35;
   text-align: center;
 }
+
+.talk {
+  padding: 8px 16px 16px;
+}
+
+.members,
+.talkEmpty {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.talkTitle {
+  margin: 12px 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.comments {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.comments li + li {
+  margin-top: 8px;
+}
+
+.comments li {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.commentAuthor {
+  font-weight: 700;
+}
+
+.commentLabel {
+  display: block;
+  margin: 12px 0 6px;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.commentRow {
+  display: flex;
+  gap: 8px;
+}
+
+.commentInput {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--tap);
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.commentPost {
+  min-height: var(--tap);
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--blue);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.commentPost:disabled {
+  opacity: 0.5;
+}

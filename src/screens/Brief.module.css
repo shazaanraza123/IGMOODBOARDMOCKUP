@@ -18,8 +18,17 @@
   background: var(--surface-1);
 }
 
-.title {
+.kicker {
   margin: 0;
+  color: var(--blue-text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 4px 0 0;
   font-size: 18px;
   font-weight: 700;
 }
@@ -32,15 +41,50 @@
   line-height: 1.35;
 }
 
-.lines {
-  margin: 10px 0 0;
-  padding-left: 1.2em;
-  font-size: 14px;
-  line-height: 1.4;
+.sources {
+  color: var(--text);
+  font-weight: 700;
 }
 
-.lines li + li {
-  margin-top: 4px;
+.slides,
+.reel {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slides {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.reel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 96px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.slides .slide {
+  flex: 0 0 148px;
+}
+
+.slideIndex {
+  color: var(--text-3);
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .actions {

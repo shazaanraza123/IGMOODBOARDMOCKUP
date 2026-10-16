@@ -10,12 +10,13 @@
 .tab {
   flex: 1;
   min-height: var(--tap);
-  padding: 0 4px;
+  padding: 0 2px;
   border: 0;
   background: transparent;
   color: var(--text-2);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .tab:focus {
@@ -138,22 +139,81 @@
   margin: 20px 16px 0;
 }
 
-.briefLink {
+.revisit {
+  margin: 12px 16px 4px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+
+.revisitTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.revisitCopy,
+.revisitBoard {
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.revisitCopy {
+  margin: 4px 0 0;
+}
+
+.revisitList {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.revisitRow {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
   justify-content: space-between;
   min-height: var(--tap);
-  margin: 8px 16px 0;
-  padding: 8px 0;
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.3;
-  text-decoration: none;
 }
 
-.briefLink svg {
+.revisitRow + .revisitRow {
+  border-top: 1px solid var(--line);
+}
+
+.revisitCopyBlock {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.revisitHandle {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.revisitActions {
+  display: flex;
   flex: none;
-  color: var(--text-2);
+  gap: 6px;
+}
+
+.revisitKeep,
+.revisitRemove {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.revisitKeep {
+  background: rgb(0 149 246 / 16%);
+  color: var(--blue-text);
+}
+
+.revisitRemove {
+  background: var(--surface-3);
+  color: var(--text);
 }

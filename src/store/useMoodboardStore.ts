@@ -8,6 +8,8 @@ export type MoodboardData = {
   boards: Board[];
   savedIds: string[];
   briefs: IdeaDirection[];
+  keptKeys: string[];
+  nudgeDismissed: boolean;
 };
 
 export type MoodboardState = MoodboardData & {
@@ -23,6 +25,10 @@ export type MoodboardState = MoodboardData & {
   toggleShortlist: (boardId: string, postId: string) => void;
   saveDirection: (direction: IdeaDirection) => void;
   removeDirection: (id: string) => void;
+  addMember: (boardId: string, handle: string) => void;
+  addComment: (boardId: string, text: string) => void;
+  keepSave: (key: string) => void;
+  dismissNudge: () => void;
   resetDemo: () => void;
 };
 
@@ -32,6 +38,8 @@ export function createSeedData(): MoodboardData {
     boards,
     savedIds: collectSavedIds(boards),
     briefs: [],
+    keptKeys: [],
+    nudgeDismissed: false,
   };
 }
 
@@ -83,6 +91,8 @@ export const useMoodboardStore = create<MoodboardState>()(
           kind,
           isPrivate: true,
           items: [],
+          members: [],
+          comments: [],
           createdAt: now,
           updatedAt: now,
         };
@@ -241,6 +251,58 @@ export const useMoodboardStore = create<MoodboardState>()(
         set((state) => ({
           briefs: state.briefs.filter((item) => item.id !== id),
         })),
+      addMember: (boardId, handle) => {
+        const cleaned = handle.trim().replace(/^@/, "");
+        if (!cleaned) return;
+        const now = Date.now();
+        set((state) => ({
+          boards: state.boards.map((board) => {
+            if (board.id !== boardId) return board;
+            const members = board.members ?? [];
+            if (
+              members.some(
+                (entry) => entry.toLowerCase() === cleaned.toLowerCase(),
+              )
+            ) {
+              return board;
+            }
+            return touch({ ...board, members: [...members, cleaned] }, now);
+          }),
+        }));
+      },
+      addComment: (boardId, text) => {
+        const cleaned = text.trim();
+        if (!cleaned) return;
+        const now = Date.now();
+        set((state) => ({
+          boards: state.boards.map((board) => {
+            if (board.id !== boardId) return board;
+            const comments = board.comments ?? [];
+            return touch(
+              {
+                ...board,
+                comments: [
+                  ...comments,
+                  {
+                    id: `c-${crypto.randomUUID()}`,
+                    author: "you",
+                    text: cleaned,
+                    createdAt: now,
+                  },
+                ],
+              },
+              now,
+            );
+          }),
+        }));
+      },
+      keepSave: (key) =>
+        set((state) => ({
+          keptKeys: state.keptKeys.includes(key)
+            ? state.keptKeys
+            : [...state.keptKeys, key],
+        })),
+      dismissNudge: () => set({ nudgeDismissed: true }),
       resetDemo: () => set(createSeedData()),
     }),
     {
@@ -250,6 +312,8 @@ export const useMoodboardStore = create<MoodboardState>()(
         boards: state.boards,
         savedIds: state.savedIds,
         briefs: state.briefs,
+        keptKeys: state.keptKeys,
+        nudgeDismissed: state.nudgeDismissed,
       }),
     },
   ),

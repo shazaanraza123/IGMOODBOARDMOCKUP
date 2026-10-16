@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Chip } from "../components/Chip";
@@ -108,11 +108,31 @@ export function FindSimilar() {
     tabRefs.current[next.id]?.focus();
   };
 
-  const focus = source?.focus ?? CENTERED_FOCUS;
+  const stageRef = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
+  const [box, setBox] = useState<FocusBox | null>(null);
+  const focus = box ?? source?.focus ?? CENTERED_FOCUS;
   const openPost = openId ? getPost(openId) : undefined;
 
+  useEffect(() => {
+    setBox(null);
+  }, [source?.id]);
+
+  const moveFocus = (clientX: number, clientY: number) => {
+    const rect = stageRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0 || rect.height === 0) return;
+    const nextX = ((clientX - rect.left) / rect.width) * 100 - focus.w / 2;
+    const nextY = ((clientY - rect.top) / rect.height) * 100 - focus.h / 2;
+    setBox({
+      x: Math.min(100 - focus.w, Math.max(0, nextX)),
+      y: Math.min(100 - focus.h, Math.max(0, nextY)),
+      w: focus.w,
+      h: focus.h,
+    });
+  };
+
   return (
-    <section className={styles.screen} aria-labelledby="similar-title">
+    <section className={styles.screen}>
       <Header
         title="Find similar"
         titleId="similar-title"
@@ -124,7 +144,7 @@ export function FindSimilar() {
         </EmptyState>
       ) : (
         <>
-          <div className={styles.stage}>
+          <div className={styles.stage} ref={stageRef}>
             <PostImage
               image={source.image}
               imageAlt={source.imageAlt}
@@ -134,18 +154,32 @@ export function FindSimilar() {
             />
             <div
               className={styles.focus}
+              role="group"
+              aria-label="Focus region"
               style={{
                 left: `${focus.x}%`,
                 top: `${focus.y}%`,
                 width: `${focus.w}%`,
                 height: `${focus.h}%`,
               }}
+              onPointerDown={(event) => {
+                dragging.current = true;
+                event.currentTarget.setPointerCapture(event.pointerId);
+                moveFocus(event.clientX, event.clientY);
+              }}
+              onPointerMove={(event) => {
+                if (!dragging.current) return;
+                moveFocus(event.clientX, event.clientY);
+              }}
+              onPointerUp={() => {
+                dragging.current = false;
+              }}
             >
-              <span className={styles.category}>
-                {categoryLabel(source.category)}
-              </span>
+              <span className={styles.focusLabel}>Focus</span>
             </div>
           </div>
+          <p className={styles.hint}>Drag the frame over the part you mean.</p>
+          <p className={styles.category}>{categoryLabel(source.category)}</p>
           <h2 className={styles.question}>What caught your eye?</h2>
           <div className={styles.chips}>
             {source.attributes.map((attribute) => (

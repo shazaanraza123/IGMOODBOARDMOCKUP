@@ -35,3 +35,46 @@
   font-size: 14px;
   line-height: 1.35;
 }
+
+.nudge {
+  margin: 4px 16px 12px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+
+.nudgeCopy {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.nudgeActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.nudgeGo,
+.nudgeLater {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nudgeGo {
+  display: inline-flex;
+  align-items: center;
+  background: var(--blue);
+  color: #ffffff;
+}
+
+.nudgeLater {
+  background: var(--surface-3);
+  color: var(--text);
+}

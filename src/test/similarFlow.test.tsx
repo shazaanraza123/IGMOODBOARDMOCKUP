@@ -31,7 +31,13 @@ describe("find similar screen", () => {
     renderAt("/board/b-boots/similar");
 
     expect(
-      screen.getByRole("heading", { name: "Find similar" }),
+      screen.getAllByRole("heading", { name: "Find similar" }),
+    ).toHaveLength(1);
+    expect(
+      screen.getByRole("group", { name: "Focus region" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Drag the frame over the part you mean."),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Tall shaft" })).toHaveAttribute(
       "aria-pressed",
@@ -61,7 +67,7 @@ describe("find similar screen", () => {
     expect(cards()[0]).toHaveTextContent("Exact match");
     expect(cards()[0]).toHaveTextContent("via tagged post");
     expect(cards()[1]).toHaveTextContent("Exact match");
-    expect(cards()[2]).toHaveTextContent("Similar product");
+    expect(cards()[2]).toHaveTextContent("Similar products");
     expect(cards()[2]).not.toHaveTextContent("Exact match");
     expect(cards()[3]).toHaveTextContent("Inspiration");
     expect(cards()[3]).toHaveTextContent("flea.found");

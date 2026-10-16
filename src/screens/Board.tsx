@@ -18,9 +18,9 @@ import type { Attribute, BoardItem } from "../types";
 import styles from "./Board.module.css";
 
 const TILE_RATIOS = [
-  { width: 3, height: 4 },
-  { width: 1, height: 1 },
   { width: 4, height: 5 },
+  { width: 1, height: 1 },
+  { width: 5, height: 4 },
 ];
 
 type Filter = "notes" | "shortlist";
@@ -204,6 +204,7 @@ export function Board() {
               </MasonryGrid>
             </div>
           )}
+          <BoardTalk boardId={board.id} />
           {board.kind === "creator" ? (
             <div ref={stickyRef} className={styles.sticky} data-sticky-cta="">
               <Link className={styles.develop} to={ideasTo}>
@@ -230,6 +231,71 @@ export function Board() {
         onDeleted={() => navigate("/saved")}
         returnFocusRef={moreRef}
       />
+    </section>
+  );
+}
+
+function BoardTalk({ boardId }: { boardId: string }) {
+  const board = useMoodboardStore((state) =>
+    state.boards.find((entry) => entry.id === boardId),
+  );
+  const addComment = useMoodboardStore((state) => state.addComment);
+  const [text, setText] = useState("");
+  if (!board) return null;
+  const members = board.members ?? [];
+  const comments = board.comments ?? [];
+
+  return (
+    <section className={styles.talk} aria-label="Board comments">
+      <p className={styles.members}>
+        {board.isPrivate
+          ? "Private. Make it public from the menu to share the link."
+          : "Anyone with the link can open this board."}
+        {members.length > 0
+          ? ` With ${members.map((member) => `@${member}`).join(", ")}.`
+          : ""}
+      </p>
+      <h2 className={styles.talkTitle}>Comments</h2>
+      {comments.length === 0 ? (
+        <p className={styles.talkEmpty}>No comments yet.</p>
+      ) : (
+        <ul className={styles.comments}>
+          {comments.map((comment) => (
+            <li key={comment.id}>
+              <span className={styles.commentAuthor}>@{comment.author}</span>{" "}
+              {comment.text}
+            </li>
+          ))}
+        </ul>
+      )}
+      <form
+        className={styles.commentForm}
+        onSubmit={(event) => {
+          event.preventDefault();
+          addComment(boardId, text);
+          setText("");
+        }}
+      >
+        <label className={styles.commentLabel} htmlFor={`comment-${boardId}`}>
+          Add a comment
+        </label>
+        <div className={styles.commentRow}>
+          <input
+            id={`comment-${boardId}`}
+            className={styles.commentInput}
+            value={text}
+            placeholder="Say something about this board"
+            onChange={(event) => setText(event.target.value)}
+          />
+          <button
+            type="submit"
+            className={styles.commentPost}
+            disabled={text.trim().length === 0}
+          >
+            Post
+          </button>
+        </div>
+      </form>
     </section>
   );
 }

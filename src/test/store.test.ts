@@ -287,6 +287,29 @@ describe("moodboard store", () => {
     }
   });
 
+  it("shares a board with a member and a comment", () => {
+    const { addMember, addComment } = useMoodboardStore.getState();
+    addMember("b-boots", "@flea.found");
+    addMember("b-boots", "flea.found");
+    addComment("b-boots", "  The shaft is the point.  ");
+    addComment("b-boots", "   ");
+    const next = board("b-boots");
+    expect(next.isPrivate).toBe(true);
+    expect(next.members).toEqual(["flea.found"]);
+    expect(next.comments).toHaveLength(1);
+    expect(next.comments?.[0]?.text).toBe("The shaft is the point.");
+    expect(next.comments?.[0]?.author).toBe("you");
+  });
+
+  it("keeps an old save out of the revisit sweep", () => {
+    useMoodboardStore.getState().keepSave("b-boots:p-hero");
+    expect(useMoodboardStore.getState().keptKeys).toEqual(["b-boots:p-hero"]);
+    useMoodboardStore.getState().keepSave("b-boots:p-hero");
+    expect(useMoodboardStore.getState().keptKeys).toEqual(["b-boots:p-hero"]);
+    useMoodboardStore.getState().dismissNudge();
+    expect(useMoodboardStore.getState().nudgeDismissed).toBe(true);
+  });
+
   it("ignores corrupt storage instead of crashing", async () => {
     localStorage.setItem(MOODBOARD_STORAGE_KEY, "{not json");
     await expect(

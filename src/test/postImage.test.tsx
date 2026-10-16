@@ -16,7 +16,8 @@ describe("PostImage", () => {
     expect(screen.getByRole("img", { name: "Black tall boots" })).toHaveStyle({
       background: "#3a312b",
     });
-    expect(screen.getByText("PHOTO · Black tall boots")).toBeInTheDocument();
+    expect(screen.getByText("No photo yet")).toBeInTheDocument();
+    expect(screen.queryByText(/PHOTO ·/)).not.toBeInTheDocument();
     expect(document.querySelector("img")).toBeNull();
   });
 
@@ -35,8 +36,6 @@ describe("PostImage", () => {
     expect(image).toHaveAttribute("width", "300");
     expect(image).toHaveAttribute("height", "300");
     fireEvent.error(image);
-    expect(
-      screen.getByText("PHOTO · Black tall-shaft boots"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("No photo yet")).toBeInTheDocument();
   });
 });

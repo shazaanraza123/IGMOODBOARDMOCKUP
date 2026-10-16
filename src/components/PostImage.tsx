@@ -42,8 +42,9 @@ export function PostImage({
           onError={() => setFailed(true)}
         />
       ) : (
-        <span className={styles.label} aria-hidden="true">
-          PHOTO · {imageAlt}
+        <span className={styles.fallback} aria-hidden="true">
+          <span className={styles.fallbackMark} />
+          <span className={styles.fallbackLabel}>No photo yet</span>
         </span>
       )}
     </div>

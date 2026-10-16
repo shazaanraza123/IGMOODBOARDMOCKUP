@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { Chip } from "../components/Chip";
 import { EmptyState } from "../components/EmptyState";
 import { DirectionCard } from "../components/DirectionCard";
 import { Header } from "../components/Header";
@@ -155,15 +154,17 @@ export function Ideas() {
         </EmptyState>
       ) : (
         <div className={styles.body}>
-          <div className={styles.formats}>
+          <div className={styles.formats} role="radiogroup" aria-label="Format">
             {FORMATS.map((item) => (
-              <Chip
+              <button
                 key={item.id}
-                pressed={format === item.id}
+                type="button"
+                className={styles.segment}
+                aria-pressed={format === item.id}
                 onClick={() => chooseFormat(item.id)}
               >
                 {item.label}
-              </Chip>
+              </button>
             ))}
           </div>
           {group ? (
@@ -184,60 +185,78 @@ export function Ideas() {
                     image={entry.post.image}
                     imageAlt={entry.post.imageAlt}
                     tint={entry.post.tint}
-                    width={48}
-                    height={48}
+                    width={72}
+                    height={72}
                   />
                 </span>
               ))}
             </span>
           </button>
-          <button
-            type="button"
-            className={styles.generate}
-            disabled={generating || included.length === 0}
-            onClick={generate}
-          >
-            <Icon name="sparkle" size={18} />
-            Generate 3 directions
-          </button>
-          {included.length === 0 ? (
-            <EmptyState>Pick at least one reference.</EmptyState>
-          ) : null}
-          {generating ? (
-            <div aria-busy="true">
-              <p className={styles.status} role="status">
-                Generating 3 directions
-              </p>
-              <div className={styles.skeletons} aria-hidden="true">
-                <span className={styles.skeleton} />
-                <span className={styles.skeleton} />
-                <span className={styles.skeleton} />
+          <div className={directions ? styles.stageTall : styles.stage}>
+            {included.length === 0 ? (
+              <EmptyState>Pick at least one reference.</EmptyState>
+            ) : null}
+            {generating ? (
+              <div aria-busy="true">
+                <p className={styles.status} role="status">
+                  Generating 3 directions
+                </p>
+                <div className={styles.skeletons} aria-hidden="true">
+                  <span className={styles.skeleton} />
+                  <span className={styles.skeleton} />
+                  <span className={styles.skeleton} />
+                </div>
               </div>
-            </div>
-          ) : null}
-          {directions ? (
-            <ol className={styles.list}>
-              {directions.map((direction, index) => (
-                <DirectionCard
-                  key={direction.id}
-                  direction={direction}
-                  index={index}
-                  expanded={expanded === index}
-                  editing={editingId === direction.id}
-                  saved={briefs.some((item) => item.id === direction.id)}
-                  onToggle={() =>
-                    setExpanded((current) => (current === index ? -1 : index))
-                  }
-                  onEdit={() => setEditingId(direction.id)}
-                  onDone={(next) => commitEdit(direction, next)}
-                  onSave={() => saveDirection(direction)}
-                />
-              ))}
-            </ol>
-          ) : null}
-          <p className={styles.footer}>
-            Check facts and credit original creators before you post.
-          </p>
+            ) : null}
+            {!generating && !directions && included.length > 0 ? (
+              <div className={styles.preview}>
+                <div className={styles.ghost} aria-hidden="true">
+                  <span className={styles.ghostKicker} />
+                  <span className={styles.ghostTitle} />
+                  <span className={styles.ghostLine} />
+                  <span className={styles.ghostLine} />
+                </div>
+                <p className={styles.previewNote}>
+                  Three directions will appear here.
+                </p>
+              </div>
+            ) : null}
+            {directions ? (
+              <ol className={styles.list}>
+                {directions.map((direction, index) => (
+                  <DirectionCard
+                    key={direction.id}
+                    direction={direction}
+                    index={index}
+                    expanded={expanded === index}
+                    editing={editingId === direction.id}
+                    saved={briefs.some((item) => item.id === direction.id)}
+                    onToggle={() =>
+                      setExpanded((current) => (current === index ? -1 : index))
+                    }
+                    onEdit={() => setEditingId(direction.id)}
+                    onDone={(next) => commitEdit(direction, next)}
+                    onSave={() => saveDirection(direction)}
+                  />
+                ))}
+              </ol>
+            ) : null}
+          </div>
+          <div className={styles.dock}>
+            <p className={styles.fence}>Only uses posts on this board.</p>
+            <button
+              type="button"
+              className={styles.generate}
+              disabled={generating || included.length === 0}
+              onClick={generate}
+            >
+              <Icon name="sparkle" size={18} />
+              Generate 3 directions
+            </button>
+            <p className={styles.footer}>
+              Check facts and credit original creators before you post.
+            </p>
+          </div>
         </div>
       )}
       <Sheet

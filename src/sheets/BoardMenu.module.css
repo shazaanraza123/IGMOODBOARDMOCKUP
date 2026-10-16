@@ -61,3 +61,31 @@
 .primary:disabled {
   opacity: 0.4;
 }
+
+.member {
+  padding: 4px 16px 8px;
+}
+
+.memberList {
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.memberRow {
+  display: flex;
+  gap: 8px;
+}
+
+.memberRow .input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.memberRow .primary {
+  width: auto;
+  min-height: var(--tap);
+  padding: 0 16px;
+}

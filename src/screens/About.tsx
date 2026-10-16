@@ -38,7 +38,7 @@ export function About() {
           post.
         </p>
         <p className={styles.copy}>
-          Similar product is tagged, but it misses something you asked for.
+          Similar products is tagged, but it misses something you asked for.
           Inspiration has no product tag. It is a reference, not a shop result.
         </p>
 

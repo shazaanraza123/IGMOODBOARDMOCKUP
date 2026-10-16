@@ -25,15 +25,18 @@ export function BoardMenu({
   const renameBoard = useMoodboardStore((state) => state.renameBoard);
   const setPrivate = useMoodboardStore((state) => state.setPrivate);
   const deleteBoard = useMoodboardStore((state) => state.deleteBoard);
+  const addMember = useMoodboardStore((state) => state.addMember);
   const { show } = useToast();
   const [renaming, setRenaming] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [name, setName] = useState("");
+  const [handle, setHandle] = useState("");
 
   useEffect(() => {
     setRenaming(false);
     setConfirming(false);
     setName(board?.name ?? "");
+    setHandle("");
   }, [board]);
 
   const saveName = () => {
@@ -44,7 +47,8 @@ export function BoardMenu({
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard?.writeText(window.location.href);
+      const url = `${window.location.origin}/board/${board?.id ?? ""}`;
+      await navigator.clipboard?.writeText(url);
     } catch {
       // Clipboard can be blocked. The toast still confirms the action.
     }
@@ -126,17 +130,51 @@ export function BoardMenu({
               >
                 {board.isPrivate ? "Make public" : "Make private"}
               </button>
-              {includeShare ? (
-                <button
-                  type="button"
-                  className={styles.row}
-                  onClick={() => {
-                    void copyLink();
-                  }}
-                >
-                  Share link
-                </button>
-              ) : null}
+              <form
+                className={styles.member}
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  addMember(board.id, handle);
+                  setHandle("");
+                  show({ title: "Member added" });
+                }}
+              >
+                <label className={styles.label} htmlFor="member-handle">
+                  Add member
+                </label>
+                {(board.members ?? []).length > 0 ? (
+                  <p className={styles.memberList}>
+                    {(board.members ?? [])
+                      .map((member) => `@${member}`)
+                      .join(", ")}
+                  </p>
+                ) : null}
+                <div className={styles.memberRow}>
+                  <input
+                    id="member-handle"
+                    className={styles.input}
+                    value={handle}
+                    placeholder="Handle"
+                    onChange={(event) => setHandle(event.target.value)}
+                  />
+                  <button
+                    type="submit"
+                    className={styles.primary}
+                    disabled={handle.trim().length === 0}
+                  >
+                    Add
+                  </button>
+                </div>
+              </form>
+              <button
+                type="button"
+                className={styles.row}
+                onClick={() => {
+                  void copyLink();
+                }}
+              >
+                Share link
+              </button>
               {includeShare ? (
                 <Link to="/brief" className={styles.row} onClick={onClose}>
                   Brief

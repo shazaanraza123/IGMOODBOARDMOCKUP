@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
+import type { Board } from "../types";
 import { BoardCard } from "../components/BoardCard";
 import { EmptyState } from "../components/EmptyState";
 import { Header, IconButton } from "../components/Header";
@@ -9,17 +10,20 @@ import { PostImage } from "../components/PostImage";
 import { getPost, posts } from "../data/posts";
 import { searchMoodboard } from "../lib/search";
 import { useMoodboardStore } from "../store/useMoodboardStore";
+import { savesToRevisit } from "../lib/revisit";
 import { BoardMenu } from "../sheets/BoardMenu";
 import { NewBoardSheet } from "../sheets/NewBoardSheet";
+import { BriefList } from "./Brief";
 import styles from "./Saved.module.css";
 
-const TABS = ["posts", "collections", "moodboards"] as const;
+const TABS = ["posts", "collections", "moodboards", "brief"] as const;
 type SavedTab = (typeof TABS)[number];
 
 const TAB_LABEL: Record<SavedTab, string> = {
   posts: "All posts",
   collections: "Collections",
   moodboards: "Moodboards",
+  brief: "Brief",
 };
 
 const COLLECTION_IDS = [
@@ -37,7 +41,9 @@ const COLLECTION_IDS = [
 export function Saved() {
   const boards = useMoodboardStore((state) => state.boards);
   const savedIds = useMoodboardStore((state) => state.savedIds);
-  const briefs = useMoodboardStore((state) => state.briefs);
+  const keptKeys = useMoodboardStore((state) => state.keptKeys);
+  const keepSave = useMoodboardStore((state) => state.keepSave);
+  const removeFromBoard = useMoodboardStore((state) => state.removeFromBoard);
   const [tab, setTab] = useState<SavedTab>("moodboards");
   const [query, setQuery] = useState("");
   const [menuId, setMenuId] = useState<string | null>(null);
@@ -46,6 +52,7 @@ export function Saved() {
     posts: null,
     collections: null,
     moodboards: null,
+    brief: null,
   });
   const menuFocus = useRef<HTMLElement | null>(null);
   const createFocus = useRef<HTMLButtonElement | null>(null);
@@ -297,23 +304,38 @@ export function Saved() {
           ) : boards.length === 0 ? (
             <EmptyState>No moodboards yet.</EmptyState>
           ) : (
-            <div className={styles.grid}>
-              {boards.map((board) => (
-                <BoardCard
-                  key={board.id}
-                  board={board}
-                  onOpenOptions={(id, anchor) => {
-                    menuFocus.current = anchor;
-                    setMenuId(id);
-                  }}
-                />
-              ))}
-            </div>
+            <>
+              <Revisit
+                boards={boards}
+                keptKeys={keptKeys}
+                onKeep={keepSave}
+                onRemove={removeFromBoard}
+              />
+              <div className={styles.grid}>
+                {boards.map((board) => (
+                  <BoardCard
+                    key={board.id}
+                    board={board}
+                    onOpenOptions={(id, anchor) => {
+                      menuFocus.current = anchor;
+                      setMenuId(id);
+                    }}
+                  />
+                ))}
+              </div>
+            </>
           )}
-          <Link to="/brief" className={styles.briefLink}>
-            <span>Brief · {briefs.length} saved</span>
-            <Icon name="chevronRight" size={18} />
-          </Link>
+        </div>
+      ) : null}
+
+      {tab === "brief" ? (
+        <div
+          role="tabpanel"
+          id="saved-panel-brief"
+          aria-labelledby="saved-tab-brief"
+          className={styles.panel}
+        >
+          <BriefList />
         </div>
       ) : null}
 
@@ -327,6 +349,61 @@ export function Saved() {
         onClose={() => setCreating(false)}
         returnFocusRef={createFocus}
       />
+    </section>
+  );
+}
+
+function Revisit({
+  boards,
+  keptKeys,
+  onKeep,
+  onRemove,
+}: {
+  boards: Board[];
+  keptKeys: string[];
+  onKeep: (key: string) => void;
+  onRemove: (boardId: string, postId: string) => void;
+}) {
+  const rows = savesToRevisit(boards, keptKeys);
+  if (rows.length === 0) return null;
+
+  return (
+    <section className={styles.revisit} aria-label="Still into this?">
+      <h2 className={styles.revisitTitle}>Still into this?</h2>
+      <p className={styles.revisitCopy}>
+        These saves have been sitting a while. Keep them, or take them off the
+        board.
+      </p>
+      <ul className={styles.revisitList}>
+        {rows.map((row) => {
+          const post = getPost(row.item.postId);
+          if (!post) return null;
+          return (
+            <li key={row.key} className={styles.revisitRow}>
+              <span className={styles.revisitCopyBlock}>
+                <span className={styles.revisitHandle}>{post.author}</span>
+                <span className={styles.revisitBoard}>{row.board.name}</span>
+              </span>
+              <span className={styles.revisitActions}>
+                <button
+                  type="button"
+                  className={styles.revisitKeep}
+                  onClick={() => onKeep(row.key)}
+                >
+                  Keep
+                </button>
+                <button
+                  type="button"
+                  className={styles.revisitRemove}
+                  onClick={() => onRemove(row.board.id, row.item.postId)}
+                >
+                  Remove
+                </button>
+              </span>
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 }

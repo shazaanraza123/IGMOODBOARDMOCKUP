@@ -74,6 +74,10 @@ export function SaveSheet({ post, onClose, returnFocusRef }: SaveSheetProps) {
       {post ? (
         <>
           <div className={styles.body}>
+            <p className={styles.teach}>
+              A moodboard collects the posts you're gathering, with a note for
+              why they belong together.
+            </p>
             <ul className={styles.list}>
               {boards.map((board) => {
                 const selected = board.items.some(

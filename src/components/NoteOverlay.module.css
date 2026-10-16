@@ -4,7 +4,7 @@
   bottom: 4px;
   left: 4px;
   margin: 0;
-  padding: 6px 8px 12px;
+  padding: 6px 8px;
   overflow: hidden;
   border-radius: var(--radius-sm);
   background: rgb(0 0 0 / 72%);
@@ -22,6 +22,3 @@
   line-clamp: 2;
 }
 
-.note strong {
-  font-weight: 700;
-}

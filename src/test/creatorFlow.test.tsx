@@ -54,6 +54,12 @@ describe("creator flow", () => {
       "aria-pressed",
       "true",
     );
+    expect(
+      screen.getByText("Three directions will appear here."),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Only uses posts on this board."),
+    ).toBeInTheDocument();
 
     await user.click(
       screen.getByRole("button", { name: "Generate 3 directions" }),
@@ -111,7 +117,9 @@ describe("creator flow", () => {
 
     await user.click(screen.getByRole("button", { name: "Remove" }));
     expect(
-      screen.getByText("Save a direction and it shows up here."),
+      screen.getByText(
+        "Save a direction and it shows up here, from Develop an idea on any creator board.",
+      ),
     ).toBeInTheDocument();
     expect(useMoodboardStore.getState().briefs).toEqual([]);
   });

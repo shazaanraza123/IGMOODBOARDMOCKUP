@@ -56,6 +56,13 @@ export interface BoardItem {
   shortlisted?: boolean;
 }
 
+export interface BoardComment {
+  id: string;
+  author: string;
+  text: string;
+  createdAt: number;
+}
+
 export interface Board {
   id: string;
   name: string;
@@ -64,6 +71,8 @@ export interface Board {
   items: BoardItem[];
   createdAt: number;
   updatedAt: number;
+  members?: string[];
+  comments?: BoardComment[];
 }
 
 export interface IdeaDirection {

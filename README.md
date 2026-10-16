@@ -38,7 +38,7 @@ The dev server listens on port **47231** and on `0.0.0.0`. Open `http://127.0.0.
 
 ### Result labels
 
-Find similar uses three labels, and Exact match is rare on purpose. It shows only when a product is tagged, it has every detail you picked, and it is the same kind of post. Similar product is tagged but misses something. Inspiration has no product tag, so it is a reference rather than a shop result.
+Find similar uses three labels, and Exact match is rare on purpose. It shows only when a product is tagged, it has every detail you picked, and it is the same kind of post. Similar products is tagged but misses something. Inspiration has no product tag, so it is a reference rather than a shop result.
 
 ### Notes on save
 
@@ -58,7 +58,7 @@ Similarity scores shared attributes. An embedding model can replace it through `
 
 ## Photos
 
-Real photos are not in the repo. Until a file is there, each post uses its tint and the description in `imageAlt`. Add JPEGs as described in [`public/images/README.md`](public/images/README.md).
+The app ships real JPEGs in [`public/images`](public/images). Each post points at `/images/{id}.jpg`. If a file is missing or fails to load, the tile shows a labeled placeholder ("No photo yet") on the post's tint, and the screen reader still hears `imageAlt`. The shot list is in [`public/images/README.md`](public/images/README.md).
 
 ## Disclaimer
 

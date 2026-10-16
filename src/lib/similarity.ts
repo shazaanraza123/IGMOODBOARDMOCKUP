@@ -50,7 +50,7 @@ export function resultLabel(kind: ResultKind): string {
     case "exact-product":
       return "Exact match";
     case "similar-product":
-      return "Similar product";
+      return "Similar products";
     case "inspiration":
       return "Inspiration";
   }

@@ -95,6 +95,11 @@ export function DirectionCard({
       <p className={styles.meta}>
         {formatLine(direction.format, direction.structure.length)}
       </p>
+      {authors.length > 0 ? (
+        <p className={styles.handles}>
+          {authors.map((author) => `@${author}`).join(" ")}
+        </p>
+      ) : null}
       {editing ? (
         <ol className={styles.lines}>
           {lines.map((line, lineIndex) => (
